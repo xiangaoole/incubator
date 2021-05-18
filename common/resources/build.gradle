@@ -1,5 +1,12 @@
 apply from: "$rootDir/common-android-library.gradle"
 
+android {
+    defaultConfig {
+        minSdkVersion DefaultConfig.minSdk
+        targetSdkVersion DefaultConfig.targetSdk
+    }
+}
+
 dependencies {
     // Material
     implementation 'com.google.android.material:material:1.3.0'

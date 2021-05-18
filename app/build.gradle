@@ -44,4 +44,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation "com.google.android.material:material:${Versions.material}"
 
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
+
 }
