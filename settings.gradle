@@ -1,0 +1,5 @@
+rootProject.name = "AndroidDev"
+include ':app'
+include ':common:resources'
+include ':features:home'
+include ':features:meditation'

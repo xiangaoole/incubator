@@ -1,0 +1,6 @@
+apply from: "$rootDir/common-android-library.gradle"
+
+dependencies {
+    // Material
+    implementation 'com.google.android.material:material:1.3.0'
+}
