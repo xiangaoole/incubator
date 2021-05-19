@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.xiangaoole.android.meditation.MeditationActivity
 import com.xiangaoole.android.module_home.HomeActivity
+import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -21,6 +22,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     fun toMeditation(view: View) {
         jumpTo(MeditationActivity::class)
+    }
+
+    fun toWanAndroid(view: View) {
+        jumpTo(WanAndroidActivity::class)
     }
 
     private fun jumpTo(activityClass: KClass<*>) {
