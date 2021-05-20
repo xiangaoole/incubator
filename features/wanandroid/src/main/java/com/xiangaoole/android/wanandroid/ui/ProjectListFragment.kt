@@ -2,13 +2,12 @@ package com.xiangaoole.android.wanandroid.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
@@ -29,20 +28,25 @@ class ProjectListFragment : Fragment(R.layout.fragment_project_list) {
         binding.recyclerView.apply {
             val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             addItemDecoration(decoration)
+
             adapter = initAdapter()
         }
 
         binding.fabButton.setOnClickListener(::scrollToTop)
     }
 
-    private fun initAdapter(): ProjectAdapter {
+    private fun initAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> {
         val adapter = ProjectAdapter()
+
         lifecycleScope.launch {
             viewModel.projectList.collectLatest {
                 adapter.submitData(it)
             }
         }
-        return adapter
+        return adapter.withLoadStateHeaderAndFooter(
+            ProjectLoadStateAdapter { adapter.retry() },
+            ProjectLoadStateAdapter { adapter.retry() }
+        )
     }
 
     private fun scrollToTop(view: View) {
