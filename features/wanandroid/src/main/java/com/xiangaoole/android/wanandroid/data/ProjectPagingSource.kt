@@ -26,7 +26,7 @@ class ProjectPagingSource(
         val position = params.key ?: PROJECT_START_PAGE_INDEX
         return try {
             val response = service.getProject(position, cid)
-            if (response.errorMsg.isNotEmpty()) {
+            if (response.errorCode < 0) {
                 Timber.d("errorMsg: ${response.errorMsg}")
                 return LoadResult.Error(Exception(response.errorMsg))
             }

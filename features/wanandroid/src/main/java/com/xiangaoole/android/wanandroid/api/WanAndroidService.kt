@@ -26,8 +26,8 @@ interface WanAndroidService {
     ): ProjectListResponse
 
     companion object {
-        const val COMPLETE_PROJECT_CID = 294
-        const val PROJECT_START_PAGE_INDEX = 1
+        const val COMPLETE_PROJECT_CID: Int = 294
+        const val PROJECT_START_PAGE_INDEX: Int = 1
 
         private const val BASE_URL = "https://www.wanandroid.com"
 

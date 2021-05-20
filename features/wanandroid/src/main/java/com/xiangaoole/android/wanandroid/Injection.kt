@@ -1,7 +1,9 @@
 package com.xiangaoole.android.wanandroid
 
+import android.content.Context
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
+import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.ui.ProjectListViewModelFactory
 
 /**
@@ -13,14 +15,17 @@ object Injection {
     /**
      * Creates an instance of [WanAndroidRepository] based on the [WanAndroidService]
      */
-    private fun provideWanAndroidRepository(): WanAndroidRepository {
-        return WanAndroidRepository(WanAndroidService.create())
+    private fun provideWanAndroidRepository(context: Context): WanAndroidRepository {
+        return WanAndroidRepository(
+            WanAndroidService.create(),
+            WanAndroidDatabase.getInstance(context)
+        )
     }
 
     /**
      * Provides the [ProjectListViewModelFactory]
      */
-    fun provideProjectListVIewModelFactory(): ProjectListViewModelFactory {
-        return ProjectListViewModelFactory(provideWanAndroidRepository())
+    fun provideProjectListViewModelFactory(context: Context): ProjectListViewModelFactory {
+        return ProjectListViewModelFactory(provideWanAndroidRepository(context))
     }
 }

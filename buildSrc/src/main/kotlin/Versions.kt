@@ -24,4 +24,15 @@ object Versions {
      * https://github.com/bumptech/glide/releases
      */
     const val glide = "4.12.0"
+
+    /**
+     * https://developer.android.com/jetpack/androidx/releases/room
+     *
+     * implementation "androidx.room:room-runtime:"
+     * implementation "androidx.room:room-ktx:"
+     * kapt "androidx.room:room-compiler:"
+     * testImplementation "androidx.room:room-testing:"
+     *
+     */
+    const val room = "2.3.0"
 }
