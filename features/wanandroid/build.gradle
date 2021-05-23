@@ -18,6 +18,7 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-scalars:${Versions.retrofit}"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"

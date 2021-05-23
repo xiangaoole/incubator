@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidDev</string>
+    <string name="app_name">App Incubator</string>
 
     <!-- Add for LeakCanary -->
     <!-- https://square.github.io/leakcanary/changelog/#api-breaking-bettering-changes -->
