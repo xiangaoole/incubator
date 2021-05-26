@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">重试</string>
+    <string name="project">项目</string>
+    <string name="no_result">没有数据 😓</string>
+    <string name="share">Share</string>
+    <string name="open_with_browser">Open with browser</string>
+    <string name="share_article_url">%1$s分享 【%2$s】：%3$s</string>
+    <string name="app_name">WanAndroid</string>
+</resources>

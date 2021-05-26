@@ -27,6 +27,8 @@ class ProjectFragment : Fragment(R.layout.fragment_project) {
                 Injection.providerProjectTreeViewModelFactory(requireContext())
             ).get(ProjectTreeViewModel::class.java)
 
+        binding.includedLayout.tvTitle.apply { text = resources.getString(R.string.project) }
+
         viewModel.projectTrees.observe(viewLifecycleOwner) { projectTrees ->
             if (projectTrees != null) {
                 binding.pager.adapter = ProjectTreeAdapter(this, projectTrees)

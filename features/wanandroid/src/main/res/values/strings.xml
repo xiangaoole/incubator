@@ -1,4 +1,10 @@
 <resources>
     <string name="retry">retry</string>
     <string name="no_result">No results 😓</string>
+    <string name="test_long_single_line_text" translatable="false">long long long long long long long long long long long long long long text</string>
+    <string name="project">Project</string>
+    <string name="share">Share</string>
+    <string name="open_with_browser">Open with browser</string>
+    <string name="share_article_url">%1$sShare [%2$s]: %3$s</string>
+    <string name="app_name">WanAndroid</string>
 </resources>

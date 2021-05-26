@@ -21,4 +21,9 @@ object Constant {
      * Title key
      */
     const val CONTENT_TITLE_KEY = "title"
+
+    /**
+     * Share type
+     */
+    const val CONTENT_SHARE_TYPE = "text/plain"
 }
