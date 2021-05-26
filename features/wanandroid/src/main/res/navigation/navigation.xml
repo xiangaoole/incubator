@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainNav"
+    app:startDestination="@id/projectFragment2">
+
+    <fragment
+        android:id="@+id/projectFragment2"
+        android:name="com.xiangaoole.android.wanandroid.ui.ProjectFragment"
+        android:label="fragment_project"
+        tools:layout="@layout/fragment_project_list" />
+
+</navigation>

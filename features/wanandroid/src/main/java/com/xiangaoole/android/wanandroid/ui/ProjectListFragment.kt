@@ -12,27 +12,28 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLETE_PROJECT_CID
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
-import kotlinx.coroutines.Dispatchers
+import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) : Fragment(R.layout.fragment_project_list) {
-    private var _binding: FragmentProjectListBinding? = null
-    private val binding: FragmentProjectListBinding get() = _binding!!
+class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) :
+    Fragment(R.layout.fragment_project_list) {
+    private val binding by bindView(FragmentProjectListBinding::bind)
     private val adapter = ProjectAdapter()
 
     private lateinit var viewModel: ProjectListViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentProjectListBinding.bind(requireView())
 
         viewModel =
-            ViewModelProvider(this, Injection.provideProjectListViewModelFactory(requireContext(), cid))
+            ViewModelProvider(
+                this,
+                Injection.provideProjectListViewModelFactory(requireContext(), cid)
+            )
                 .get(ProjectListViewModel::class.java)
 
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -96,7 +97,6 @@ class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) : Fragmen
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         adapter.removeLoadStateListener(loadStateListener)
     }
 

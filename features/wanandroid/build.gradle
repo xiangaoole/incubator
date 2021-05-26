@@ -1,5 +1,6 @@
 apply from: "$rootDir/common-features-library.gradle"
 apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     kotlinOptions {
@@ -35,4 +36,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:${Versions.room}"
 
     implementation "androidx.viewpager2:viewpager2:${Versions.viewpager2}"
+
+    implementation("androidx.navigation:navigation-ui-ktx:${Versions.navigation}")
+    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.navigation}")
 }

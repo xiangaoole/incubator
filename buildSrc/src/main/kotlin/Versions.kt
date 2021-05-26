@@ -47,4 +47,11 @@ object Versions {
      * - "androidx.browser:browser:"
      */
     const val browser = "1.3.0"
+
+    /**
+     * - "androidx.navigation:navigation-ui-ktx:"
+     * - "androidx.navigation:navigation-fragment-ktx:"
+     * - classpath "androidx.navigation:navigation-safe-args-gradle-plugin:"
+     */
+    const val navigation = "2.3.5"
 }

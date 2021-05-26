@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.WanAndroidActivity">
 
-    <fragment
-        android:id="@+id/projectFragment"
-        android:name="com.xiangaoole.android.wanandroid.ui.ProjectFragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_project" />
+        app:navGraph="@navigation/navigation"
+        app:defaultNavHost="true"
+        tools:layout="@layout/fragment_project_list" />
 </FrameLayout>
