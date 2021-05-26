@@ -19,12 +19,13 @@ class WanAndroidRepository(
     fun getProjectsStream(cid: Int): Flow<PagingData<Project>> {
         Timber.d("getCompleteProjectsStream")
 
-        val pagingSourceFactory = { database.projectDao().getProjectsByChapterId(cid) }
+        //val pagingSourceFactory = { database.projectDao().getProjectsByChapterId(cid) }
+        val pagingSourceFactory = { ProjectPagingSource(service, cid) }
 
-        @OptIn(ExperimentalPagingApi::class)
+        //@OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
-            remoteMediator = ProjectMediator(cid, service, database),
+            //remoteMediator = ProjectMediator(cid, service, database),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }

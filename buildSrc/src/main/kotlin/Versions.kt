@@ -22,6 +22,8 @@ object Versions {
 
     /**
      * https://github.com/bumptech/glide/releases
+     *
+     * - "com.github.bumptech.glide:okhttp3-integration:"
      */
     const val glide = "4.12.0"
 
