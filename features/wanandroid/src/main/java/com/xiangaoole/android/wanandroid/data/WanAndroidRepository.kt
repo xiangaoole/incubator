@@ -8,6 +8,7 @@ import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLETE_PROJECT_CID
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.model.Project
+import com.xiangaoole.android.wanandroid.model.ProjectTree
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
@@ -28,6 +29,13 @@ class WanAndroidRepository(
             //remoteMediator = ProjectMediator(cid, service, database),
             pagingSourceFactory = pagingSourceFactory
         ).flow
+    }
+
+    /**
+     * Get Project Tree
+     */
+    suspend fun getProjectTree(): List<ProjectTree> {
+        return service.getProjectTree().data
     }
 
     companion object {

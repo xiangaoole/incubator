@@ -1,12 +1,19 @@
-package com.xiangaoole.android.wanandroid.api
+package com.xiangaoole.android.wanandroid.model
 
 import com.squareup.moshi.Json
-import com.xiangaoole.android.wanandroid.model.Project
 
-data class ProjectListResponse(
-    @Json(name = "data") val data: ProjectList,
+data class HttpResult<T>(
+    @Json(name = "data") val data: T,
     @Json(name = "errorCode") val errorCode: Int,
     @Json(name = "errorMsg") val errorMsg: String
+)
+
+data class ProjectTree(
+    @Json(name = "courseId") val courseId: Int,
+    @Json(name = "id") val id: Int,
+    @Json(name = "name") val name: String,
+    @Json(name = "order") val order: Int,
+    @Json(name = "parentChapterId") val parentChapterId: Int,
 )
 
 data class ProjectList(

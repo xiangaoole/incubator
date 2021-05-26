@@ -4,7 +4,8 @@ import android.content.Context
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
-import com.xiangaoole.android.wanandroid.ui.ProjectListViewModelFactory
+import com.xiangaoole.android.wanandroid.ui.ProjectListViewModel.ProjectListViewModelFactory
+import com.xiangaoole.android.wanandroid.ui.ProjectTreeViewModel.ProjectTreeViewModelFactory
 
 /**
  * Class that handles object creation.
@@ -25,7 +26,19 @@ object Injection {
     /**
      * Provides the [ProjectListViewModelFactory]
      */
-    fun provideProjectListViewModelFactory(context: Context): ProjectListViewModelFactory {
-        return ProjectListViewModelFactory(provideWanAndroidRepository(context))
+    fun provideProjectListViewModelFactory(
+        context: Context,
+        cid: Int
+    ): ProjectListViewModelFactory {
+        return ProjectListViewModelFactory(provideWanAndroidRepository(context), cid)
+    }
+
+    /**
+     * Provides the [ProjectTreeViewModelFactory]
+     */
+    fun providerProjectTreeViewModelFactory(
+        context: Context
+    ): ProjectTreeViewModelFactory {
+        return ProjectTreeViewModelFactory(provideWanAndroidRepository(context))
     }
 }

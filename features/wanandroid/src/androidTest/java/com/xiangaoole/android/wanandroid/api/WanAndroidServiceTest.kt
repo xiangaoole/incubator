@@ -32,4 +32,14 @@ class WanAndroidServiceTest {
             }
         }
     }
+
+    @Test
+    fun test_getProjectTree() {
+        runBlocking {
+            val projectTree = service.getProjectTree().data
+            for (tree in projectTree) {
+                println("Harold: $tree")
+            }
+        }
+    }
 }

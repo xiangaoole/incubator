@@ -1,6 +1,9 @@
 package com.xiangaoole.android.wanandroid.api
 
 import androidx.lifecycle.LiveData
+import com.xiangaoole.android.wanandroid.model.HttpResult
+import com.xiangaoole.android.wanandroid.model.ProjectList
+import com.xiangaoole.android.wanandroid.model.ProjectTree
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -23,7 +26,13 @@ interface WanAndroidService {
     suspend fun getProject(
         @Path("page") page: Int,
         @Query("cid") cid: Int
-    ): ProjectListResponse
+    ): HttpResult<ProjectList>
+
+    /**
+     * 项目分类 https://www.wanandroid.com/project/tree/json
+     */
+    @GET("project/tree/json")
+    suspend fun getProjectTree(): HttpResult<List<ProjectTree>>
 
     companion object {
         const val COMPLETE_PROJECT_CID: Int = 294

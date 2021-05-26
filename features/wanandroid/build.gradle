@@ -33,4 +33,6 @@ dependencies {
     implementation "androidx.room:room-ktx:${Versions.room}"
     kapt "androidx.room:room-compiler:${Versions.room}"
     testImplementation "androidx.room:room-testing:${Versions.room}"
+
+    implementation "androidx.viewpager2:viewpager2:${Versions.viewpager2}"
 }

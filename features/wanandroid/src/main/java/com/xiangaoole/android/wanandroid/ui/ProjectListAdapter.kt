@@ -10,7 +10,7 @@ import com.xiangaoole.android.wanandroid.model.Project
 import timber.log.Timber
 
 class ProjectAdapter : PagingDataAdapter<Project, ProjectViewHolder>(PROJECT_DIFF) {
-
+V
     companion object {
         private val PROJECT_DIFF = object : DiffUtil.ItemCallback<Project>() {
             override fun areItemsTheSame(oldItem: Project, newItem: Project): Boolean {

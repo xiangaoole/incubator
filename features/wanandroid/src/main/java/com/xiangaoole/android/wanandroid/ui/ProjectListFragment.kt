@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
+import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLETE_PROJECT_CID
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ProjectListFragment : Fragment(R.layout.fragment_project_list) {
+class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) : Fragment(R.layout.fragment_project_list) {
     private var _binding: FragmentProjectListBinding? = null
     private val binding: FragmentProjectListBinding get() = _binding!!
     private val adapter = ProjectAdapter()
@@ -31,7 +32,7 @@ class ProjectListFragment : Fragment(R.layout.fragment_project_list) {
         _binding = FragmentProjectListBinding.bind(requireView())
 
         viewModel =
-            ViewModelProvider(this, Injection.provideProjectListViewModelFactory(requireContext()))
+            ViewModelProvider(this, Injection.provideProjectListViewModelFactory(requireContext(), cid))
                 .get(ProjectListViewModel::class.java)
 
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)

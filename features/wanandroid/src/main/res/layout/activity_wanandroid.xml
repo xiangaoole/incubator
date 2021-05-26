@@ -7,9 +7,9 @@
     tools:context=".ui.WanAndroidActivity">
 
     <fragment
-        android:id="@+id/projectListFragment"
-        android:name="com.xiangaoole.android.wanandroid.ui.ProjectListFragment"
+        android:id="@+id/projectFragment"
+        android:name="com.xiangaoole.android.wanandroid.ui.ProjectFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_project_list" />
+        tools:layout="@layout/fragment_project" />
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.xiangaoole.android.wanandroid.util
 
+import android.text.Spanned
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
@@ -25,5 +26,8 @@ fun ImageView.bindUrl(url: String) {
 
 @BindingAdapter("htmlText")
 fun TextView.htmlText(text: String) {
-    setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_COMPACT))
+    setText(text.fromHtml())
 }
+
+fun String.fromHtml(): Spanned =
+    HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_COMPACT)

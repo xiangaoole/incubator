@@ -37,4 +37,14 @@ object Versions {
      *
      */
     const val room = "2.3.0"
+
+    /**
+     * - implementation "androidx.viewpager2:viewpager2:"
+     */
+    const val viewpager2 = "1.0.0"
+
+    /**
+     * - "androidx.browser:browser:"
+     */
+    const val browser = "1.3.0"
 }
