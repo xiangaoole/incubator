@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -17,35 +17,38 @@ import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLETE_PROJECT_CID
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
 import com.xiangaoole.android.wanandroid.util.bindView
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) :
-    Fragment(R.layout.fragment_project_list) {
-    private val binding by bindView(FragmentProjectListBinding::bind)
-    private val adapter = ProjectAdapter()
+    Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
 
-    private lateinit var viewModel: ProjectListViewModel
+    private val binding by bindView(FragmentProjectListBinding::bind)
+
+    private val viewModel: ProjectListViewModel by viewModels {
+        Injection.provideProjectListViewModelFactory(requireContext(), cid)
+    }
+
+    private var mAdapter: ProjectAdapter? = null
+
+    private var mInitAdapterJob: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel =
-            ViewModelProvider(
-                this,
-                Injection.provideProjectListViewModelFactory(requireContext(), cid)
-            )
-                .get(ProjectListViewModel::class.java)
-
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.recyclerView.addItemDecoration(decoration)
-        binding.recyclerView.adapter = initAdapter()
+        val adapter = ProjectAdapter()
+        binding.recyclerView.adapter = initAdapter(adapter)
 
-        binding.fabButton.setOnClickListener(::scrollToTop)
+        //view.findViewById<Button>(R.id.fabButton).setOnClickListener(::scrollToTop)
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
-    private fun initAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        lifecycleScope.launch {
+    private fun initAdapter(adapter: ProjectAdapter): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        mAdapter = adapter
+        mInitAdapterJob = lifecycleScope.launch {
             viewModel.projectList.collectLatest {
                 adapter.submitData(it)
             }
@@ -59,9 +62,30 @@ class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) :
         )
     }
 
+    override fun scrollToTop(view: View) {
+        Timber.d("Harold: scrollToTop")
+        binding.recyclerView.run {
+            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > SMOOTH_SCROLL_THRESHOLD) {
+                scrollToPosition(0)
+            } else {
+                smoothScrollToPosition(0)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // avoid leak view
+        mAdapter?.removeLoadStateListener(loadStateListener)
+        mInitAdapterJob?.cancel()
+        mInitAdapterJob = null
+        mAdapter = null
+    }
+
     private val loadStateListener: (CombinedLoadStates) -> Unit = { loadState ->
         // show empty list
-        val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+        val isListEmpty = loadState.refresh is LoadState.NotLoading && mAdapter?.itemCount == 0
         binding.emptyResultText.isVisible = isListEmpty
 
         // show list
@@ -83,21 +107,6 @@ class ProjectListFragment(private val cid: Int = COMPLETE_PROJECT_CID) :
                 context, "\uD83D\uDE28 Wooops ${it.error}", Toast.LENGTH_LONG
             ).show()
         }
-    }
-
-    private fun scrollToTop(view: View) {
-        binding.recyclerView.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > SMOOTH_SCROLL_THRESHOLD) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        adapter.removeLoadStateListener(loadStateListener)
     }
 
     companion object {

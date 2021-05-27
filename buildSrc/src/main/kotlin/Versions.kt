@@ -53,5 +53,5 @@ object Versions {
      * - "androidx.navigation:navigation-fragment-ktx:"
      * - classpath "androidx.navigation:navigation-safe-args-gradle-plugin:"
      */
-    const val navigation = "2.3.5"
+    const val navigation = "2.4.0-alpha01"
 }

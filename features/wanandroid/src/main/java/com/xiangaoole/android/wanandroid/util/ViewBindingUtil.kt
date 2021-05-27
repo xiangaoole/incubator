@@ -15,8 +15,8 @@ import kotlin.reflect.KProperty
 
 @MainThread
 inline fun <reified VB : ViewBinding> Fragment.bindView(
-    crossinline viewBinder: (View) -> VB
-) = FragmentViewBindingDelegate<Fragment, VB> { view -> viewBinder(view) }
+    noinline viewBinder: (View) -> VB
+) = FragmentViewBindingDelegate<Fragment, VB>(viewBinder)
 
 class FragmentViewBindingDelegate<in F : Fragment, out VB : ViewBinding>(
     private val viewBinder: (View) -> VB

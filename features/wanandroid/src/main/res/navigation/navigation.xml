@@ -3,12 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainNav"
-    app:startDestination="@id/projectFragment2">
+    app:startDestination="@id/projectFragment">
 
     <fragment
-        android:id="@+id/projectFragment2"
+        android:id="@+id/projectFragment"
         android:name="com.xiangaoole.android.wanandroid.ui.ProjectFragment"
-        android:label="fragment_project"
+        android:label="@string/project"
         tools:layout="@layout/fragment_project_list" />
+    <fragment
+        android:id="@+id/wechatFragment"
+        android:name="com.xiangaoole.android.wanandroid.ui.wechat.WechatFragment"
+        android:label="@string/wechat" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.xiangaoole.android.wanandroid.ui.home.HomeFragment"
+        android:label="@string/module_name" />
 
 </navigation>

@@ -54,7 +54,7 @@ class ArticleActivity : AppCompatActivity() {
             webViewClient = WebViewClient()
         }.loadUrl(url)
 
-        binding.includedLayout.apply {
+        binding.includedToolbar.apply {
             tvTitle.text = title
             tvTitle.isSelected = true
             setSupportActionBar(toolbar)
@@ -95,7 +95,7 @@ class ArticleActivity : AppCompatActivity() {
                         Intent.EXTRA_TEXT,
                         getString(
                             R.string.share_article_url,
-                            getString(R.string.app_name), title, url
+                            getString(R.string.module_name), title, url
                         )
                     )
                     type = Constant.CONTENT_SHARE_TYPE

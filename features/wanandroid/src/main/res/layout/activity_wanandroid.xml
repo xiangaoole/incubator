@@ -6,12 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".ui.WanAndroidActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/navigation"
-        app:defaultNavHost="true"
-        tools:layout="@layout/fragment_project_list" />
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includedToolbar"
+            layout="@layout/toolbar" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:navGraph="@navigation/navigation"
+            tools:layout="@layout/fragment_home" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+            app:menu="@menu/menu_bottom_navigation" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/dp_32"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:contentDescription="@null"
+            app:layout_behavior="com.xiangaoole.android.wanandroid.widget.behavior.FabScrollHideBehavior"
+            app:srcCompat="@drawable/ic_arrow_upward_white_24" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>
