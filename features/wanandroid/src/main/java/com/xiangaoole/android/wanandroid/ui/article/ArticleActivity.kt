@@ -48,19 +48,23 @@ class ArticleActivity : AppCompatActivity() {
             url = it.getString(Constant.CONTENT_URL_KEY, "")
         }
 
-        binding.webView.apply {
-            @SuppressLint("SetJavaScriptEnabled")
-            settings.javaScriptEnabled = true
-            webViewClient = WebViewClient()
-        }.loadUrl(url)
-
         binding.includedToolbar.apply {
             tvTitle.text = title
             tvTitle.isSelected = true
             setSupportActionBar(toolbar)
+            supportActionBar?.title = title
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
+        initWebView()
+    }
+
+    private fun initWebView() {
+        binding.agentWebView.apply {
+            @SuppressLint("SetJavaScriptEnabled")
+            settings.javaScriptEnabled = true
+            webViewClient = WebViewClient()
+        }.loadUrl(url)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,7 +73,7 @@ class ArticleActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        binding.webView.let {
+        binding.agentWebView.let {
             if (it.canGoBack()) {
                 it.goBack()
             } else {

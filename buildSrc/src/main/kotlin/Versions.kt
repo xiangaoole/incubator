@@ -54,4 +54,12 @@ object Versions {
      * - classpath "androidx.navigation:navigation-safe-args-gradle-plugin:"
      */
     const val navigation = "2.4.0-alpha01"
+
+    /**
+     * https://github.com/Justson/AgentWeb
+     *
+     * - "com.github.Justson.AgentWeb:agentweb-core:"
+     *
+     */
+    const val agentWeb = "v4.1.9-androidx"
 }
