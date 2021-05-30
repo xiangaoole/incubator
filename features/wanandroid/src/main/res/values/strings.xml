@@ -9,4 +9,5 @@
     <string name="module_name">WanAndroid</string>
     <string name="home">Home</string>
     <string name="wechat">Wechat</string>
+    <string name="wechat_and_author">Wechat / %1$s</string>
 </resources>

@@ -9,6 +9,7 @@ import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLET
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.model.Project
 import com.xiangaoole.android.wanandroid.model.ProjectTree
+import com.xiangaoole.android.wanandroid.ui.wechat.WechatArticlePagingSource
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
@@ -36,6 +37,26 @@ class WanAndroidRepository(
      */
     suspend fun getProjectTree(): List<ProjectTree> {
         return service.getProjectTree().data
+    }
+
+    /**
+     * Get Wechat Article Tree
+     */
+    suspend fun getWechatArticleTree(): List<ProjectTree> {
+        return service.getWechatArticleTree().data
+    }
+
+    fun getWechatArticles(id: Int): Flow<PagingData<Project>> {
+        Timber.d("getCompleteProjectsStream")
+
+        val pagingSourceFactory = { WechatArticlePagingSource(service, id) }
+
+        //@OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
+            //remoteMediator = ProjectMediator(cid, service, database),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 
     companion object {

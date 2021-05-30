@@ -15,7 +15,7 @@ import com.xiangaoole.android.wanandroid.util.fromHtml
 /**
  * [Fragment] for showing projects of different chapter using [ViewPager2].
  */
-class ProjectFragment : Fragment(R.layout.fragment_project),
+open class ProjectFragment : Fragment(R.layout.fragment_project),
     WanAndroidActivity.ChildFragmentInterface {
     private val binding by bindView(FragmentProjectBinding::bind)
     private val viewModel: ProjectTreeViewModel by viewModels {

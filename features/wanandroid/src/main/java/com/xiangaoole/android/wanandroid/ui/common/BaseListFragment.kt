@@ -1,37 +1,36 @@
-package com.xiangaoole.android.wanandroid.ui
+package com.xiangaoole.android.wanandroid.ui.common
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
-import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.COMPLETE_PROJECT_CID
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
+import com.xiangaoole.android.wanandroid.model.Project
+import com.xiangaoole.android.wanandroid.ui.ProjectAdapter
+import com.xiangaoole.android.wanandroid.ui.ProjectListFragment
+import com.xiangaoole.android.wanandroid.ui.ProjectLoadStateAdapter
+import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ProjectListFragment(private val cid: Int) :
-    Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
+abstract class BaseListFragment
+    : Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
 
     private val binding by bindView(FragmentProjectListBinding::bind)
 
-    private val viewModel: ProjectListViewModel by viewModels {
-        Injection.provideProjectListViewModelFactory(requireContext(), cid)
-    }
-
-    protected var mAdapter: ProjectAdapter? = null
+    protected var mAdapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>? = null
 
     private var mInitAdapterJob: Job? = null
 
@@ -39,19 +38,20 @@ class ProjectListFragment(private val cid: Int) :
 
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.recyclerView.addItemDecoration(decoration)
-        val adapter = ProjectAdapter()
+        val adapter = provideDataAdapter()
         binding.recyclerView.adapter = initAdapter(adapter)
 
-        //view.findViewById<Button>(R.id.fabButton).setOnClickListener(::scrollToTop)
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
-    private fun initAdapter(adapter: ProjectAdapter): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    abstract fun provideDataAdapter(): PagingDataAdapter<Project, out RecyclerView.ViewHolder>
+
+    abstract suspend fun loadData()
+
+    private fun initAdapter(adapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mAdapter = adapter
         mInitAdapterJob = lifecycleScope.launch {
-            viewModel.projectList.collectLatest {
-                adapter.submitData(it)
-            }
+            loadData()
         }
 
         adapter.addLoadStateListener(loadStateListener)
@@ -63,7 +63,6 @@ class ProjectListFragment(private val cid: Int) :
     }
 
     override fun scrollToTop(view: View) {
-        Timber.d("Harold: scrollToTop")
         binding.recyclerView.run {
             if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > SMOOTH_SCROLL_THRESHOLD) {
                 scrollToPosition(0)

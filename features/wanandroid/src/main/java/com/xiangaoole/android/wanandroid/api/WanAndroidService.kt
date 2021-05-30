@@ -34,9 +34,20 @@ interface WanAndroidService {
     @GET("project/tree/json")
     suspend fun getProjectTree(): HttpResult<List<ProjectTree>>
 
+    @GET("wxarticle/chapters/json")
+    suspend fun getWechatArticleTree(): HttpResult<List<ProjectTree>>
+
+    @GET("wxarticle/list/{id}/{page}/json")
+    suspend fun getWechatArticles(
+        @Path("id") id: Int,
+        @Path("page") page: Int
+    ): HttpResult<ProjectList>
+
+
     companion object {
         const val COMPLETE_PROJECT_CID: Int = 294
         const val PROJECT_START_PAGE_INDEX: Int = 1
+        const val WECHAT_ARTICLE_START_PAGE_INDEX: Int = 1
 
         private const val BASE_URL = "https://www.wanandroid.com"
 

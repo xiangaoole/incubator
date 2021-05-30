@@ -1,5 +1,6 @@
 package com.xiangaoole.android.wanandroid.model
 
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 data class HttpResult<T>(
@@ -8,7 +9,7 @@ data class HttpResult<T>(
     @Json(name = "errorMsg") val errorMsg: String
 )
 
-data class ProjectTree(
+data class ProjectTree( // for Project and WechatArticle
     @Json(name = "courseId") val courseId: Int,
     @Json(name = "id") val id: Int,
     @Json(name = "name") val name: String,

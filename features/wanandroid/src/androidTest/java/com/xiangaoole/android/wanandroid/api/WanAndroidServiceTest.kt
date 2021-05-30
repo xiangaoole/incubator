@@ -42,4 +42,24 @@ class WanAndroidServiceTest {
             }
         }
     }
+
+    @Test
+    fun test_getWechatArticleTree() {
+        runBlocking {
+            val wechatArticleTree = service.getWechatArticleTree().data
+            for (tree in wechatArticleTree) {
+                println("Harold: $tree")
+            }
+        }
+    }
+
+    @Test
+    fun test_getWechatArticles() = runBlocking {
+        val id = 408
+        val wechatArticles = service.getWechatArticles(id, 1).data.datas
+        for (article in wechatArticles) {
+            println("Harold: $article")
+        }
+    }
+
 }

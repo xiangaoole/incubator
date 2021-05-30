@@ -16,7 +16,7 @@ object Injection {
     /**
      * Creates an instance of [WanAndroidRepository] based on the [WanAndroidService]
      */
-    private fun provideWanAndroidRepository(context: Context): WanAndroidRepository {
+    fun provideWanAndroidRepository(context: Context): WanAndroidRepository {
         return WanAndroidRepository(
             WanAndroidService.create(),
             WanAndroidDatabase.getInstance(context)
