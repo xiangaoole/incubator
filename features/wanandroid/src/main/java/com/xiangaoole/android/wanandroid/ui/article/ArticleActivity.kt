@@ -5,10 +5,22 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.WebViewClient
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.color.MaterialColors
+import com.just.agentweb.AgentWeb
+import com.just.agentweb.DefaultWebClient
+import com.just.agentweb.NestedScrollAgentWebView
+import com.just.agentweb.WebChromeClient
 import com.xiangaoole.android.wanandroid.Constant
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ActivityArticleBinding
@@ -20,6 +32,27 @@ class ArticleActivity : AppCompatActivity() {
     private var url: String = ""
 
     private lateinit var binding: ActivityArticleBinding
+
+    private lateinit var mAgentWeb: AgentWeb
+
+    private val mLifeCycleListener = object : LifecycleEventObserver {
+        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+            val webLifecycle = mAgentWeb.webLifeCycle
+            webLifecycle ?: return
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> webLifecycle.onResume()
+                Lifecycle.Event.ON_PAUSE -> webLifecycle.onPause()
+                Lifecycle.Event.ON_DESTROY -> webLifecycle.onDestroy()
+            }
+        }
+    }
+
+    private val mWebChromeClient = object : WebChromeClient() {
+        override fun onReceivedTitle(view: WebView?, title: String?) {
+            super.onReceivedTitle(view, title)
+            binding.includedToolbar.tvTitle.text = title
+        }
+    }
 
     companion object {
         fun start(context: Context, id: Long, title: String, url: String) {
@@ -49,10 +82,11 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         binding.includedToolbar.apply {
+            tvTitle.isVisible = true
             tvTitle.text = title
             tvTitle.isSelected = true
             setSupportActionBar(toolbar)
-            supportActionBar?.title = title
+            //supportActionBar?.title = title
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
@@ -60,11 +94,26 @@ class ArticleActivity : AppCompatActivity() {
     }
 
     private fun initWebView() {
-        binding.agentWebView.apply {
+        val layoutParams = CoordinatorLayout.LayoutParams(-1, -1)
+        layoutParams.behavior = AppBarLayout.ScrollingViewBehavior()
+        val webView = NestedScrollAgentWebView(this)
+        val themeColor = MaterialColors.getColor(binding.root, R.attr.colorPrimary)
+        mAgentWeb = AgentWeb.with(this)
+            .setAgentWebParent(binding.root, 1, layoutParams)
+            .useDefaultIndicator(themeColor, 2)
+            .setWebView(webView)
+            .setWebChromeClient(mWebChromeClient)
+            .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
+            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK) // 打开其他应用时，弹窗咨询
+            .interceptUnkownUrl()
+            .createAgentWeb()
+            .go(url)
+
+        mAgentWeb.webCreator.webView.apply {
             @SuppressLint("SetJavaScriptEnabled")
             settings.javaScriptEnabled = true
-            webViewClient = WebViewClient()
-        }.loadUrl(url)
+        }
+        lifecycle.addObserver(mLifeCycleListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -73,13 +122,18 @@ class ArticleActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        binding.agentWebView.let {
-            if (it.canGoBack()) {
-                it.goBack()
-            } else {
+        mAgentWeb.let {
+            if (!it.back()) {
                 super.onBackPressed()
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (mAgentWeb.handleKeyEvent(keyCode, event)) {
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
