@@ -25,12 +25,19 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * Base Fragment show a RecycleView
+ */
 abstract class BaseListFragment
     : Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
 
     private val binding by bindView(FragmentProjectListBinding::bind)
 
+    /**
+     * This [PagingDataAdapter] reference will be null when [onDestroy]
+     */
     protected var mAdapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>? = null
+        private set
 
     private var mInitAdapterJob: Job? = null
 
@@ -44,8 +51,14 @@ abstract class BaseListFragment
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
+    /**
+     * provide [PagingDataAdapter] for the data RecyclerView
+     */
     abstract fun provideDataAdapter(): PagingDataAdapter<Project, out RecyclerView.ViewHolder>
 
+    /**
+     * Load initial data to [mAdapter].
+     */
     abstract suspend fun loadData()
 
     private fun initAdapter(adapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {

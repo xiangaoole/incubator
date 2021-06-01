@@ -31,4 +31,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun jumpTo(activityClass: KClass<*>) {
         startActivity(Intent(this, activityClass.java))
     }
+
+    fun toTestTask(view: View) {
+        jumpTo(LearnTaskActivity::class)
+    }
 }

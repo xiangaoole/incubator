@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -35,18 +36,6 @@ class ArticleActivity : AppCompatActivity() {
 
     private lateinit var mAgentWeb: AgentWeb
 
-    private val mLifeCycleListener = object : LifecycleEventObserver {
-        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-            val webLifecycle = mAgentWeb.webLifeCycle
-            webLifecycle ?: return
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> webLifecycle.onResume()
-                Lifecycle.Event.ON_PAUSE -> webLifecycle.onPause()
-                Lifecycle.Event.ON_DESTROY -> webLifecycle.onDestroy()
-            }
-        }
-    }
-
     private val mWebChromeClient = object : WebChromeClient() {
         override fun onReceivedTitle(view: WebView?, title: String?) {
             super.onReceivedTitle(view, title)
@@ -72,6 +61,11 @@ class ArticleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+        if (savedInstanceState == null) {
+            mAgentWeb.urlLoader.loadUrl(url)
+        } else {
+            mAgentWeb.webCreator.webView.restoreState(savedInstanceState)
+        }
     }
 
     private fun initView() {
@@ -107,13 +101,12 @@ class ArticleActivity : AppCompatActivity() {
             .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK) // 打开其他应用时，弹窗咨询
             .interceptUnkownUrl()
             .createAgentWeb()
-            .go(url)
+            .get()
 
         mAgentWeb.webCreator.webView.apply {
             @SuppressLint("SetJavaScriptEnabled")
             settings.javaScriptEnabled = true
         }
-        lifecycle.addObserver(mLifeCycleListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -162,5 +155,26 @@ class ArticleActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mAgentWeb.webCreator.webView.saveState(outState)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mAgentWeb.webLifeCycle.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mAgentWeb.webLifeCycle.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.includedToolbar.tvTitle.isSelected = false // !! stopMargin
+        mAgentWeb.webLifeCycle.onDestroy()
     }
 }

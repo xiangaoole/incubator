@@ -22,12 +22,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ProjectListFragment(private val cid: Int) :
-    Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
+class ProjectListFragment : Fragment(R.layout.fragment_project_list),
+    WanAndroidActivity.ChildFragmentInterface {
 
     private val binding by bindView(FragmentProjectListBinding::bind)
 
     private val viewModel: ProjectListViewModel by viewModels {
+        val cid: Int = arguments?.getInt(ARG_KEY_CID) ?: -1
         Injection.provideProjectListViewModelFactory(requireContext(), cid)
     }
 
@@ -111,5 +112,14 @@ class ProjectListFragment(private val cid: Int) :
 
     companion object {
         const val SMOOTH_SCROLL_THRESHOLD = 20
+        const val ARG_KEY_CID = "cid"
+
+        fun newInstance(cid: Int): ProjectListFragment {
+            return ProjectListFragment().apply {
+                val bundle = Bundle()
+                bundle.putInt(ARG_KEY_CID, cid)
+                arguments = bundle
+            }
+        }
     }
 }

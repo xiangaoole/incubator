@@ -18,12 +18,12 @@ class WechatArticleListViewModel(
 
     class Factory(
         private val repository: WanAndroidRepository,
-        private val id: Int
+        private val listId: Int
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(WechatArticleListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return WechatArticleListViewModel(repository, id) as T
+                return WechatArticleListViewModel(repository, listId) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

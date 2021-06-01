@@ -16,7 +16,7 @@ class ProjectTreeAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return ProjectListFragment(projectTrees[position].id)
+        return ProjectListFragment.newInstance(projectTrees[position].id)
     }
 
     /**

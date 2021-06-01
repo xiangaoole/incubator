@@ -17,7 +17,7 @@ class WechatTreeAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return WechatListFragment(itemTree[position].id)
+        return WechatListFragment.newInstance(itemTree[position].id)
     }
 
     /**
