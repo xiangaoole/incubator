@@ -10,11 +10,11 @@ data class HttpResult<T>(
 )
 
 data class ProjectTree( // for Project and WechatArticle
-    @Json(name = "courseId") val courseId: Int,
-    @Json(name = "id") val id: Int,
-    @Json(name = "name") val name: String,
-    @Json(name = "order") val order: Int,
-    @Json(name = "parentChapterId") val parentChapterId: Int,
+    @Json(name = "courseId") val courseId: Int = -1,
+    @Json(name = "id") val id: Int = -1,
+    @Json(name = "name") val name: String = "",
+    @Json(name = "order") val order: Int = -1,
+    @Json(name = "parentChapterId") val parentChapterId: Int = -1,
 )
 
 data class ProjectList(

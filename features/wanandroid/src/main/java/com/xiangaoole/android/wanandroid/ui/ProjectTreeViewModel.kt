@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
 import com.xiangaoole.android.wanandroid.model.ProjectTree
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ProjectTreeViewModel(repository: WanAndroidRepository) : ViewModel() {
     private val _projectTrees = MutableLiveData<List<ProjectTree>>()
@@ -11,7 +12,11 @@ class ProjectTreeViewModel(repository: WanAndroidRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _projectTrees.value = repository.getProjectTree()
+            try {
+                _projectTrees.value = repository.getProjectTree()
+            } catch (exception: Exception) {
+                Timber.e(exception)
+            }
         }
     }
 

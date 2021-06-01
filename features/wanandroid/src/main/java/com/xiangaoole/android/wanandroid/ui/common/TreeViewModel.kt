@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
 import com.xiangaoole.android.wanandroid.model.ProjectTree
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WechatArticleTreeViewModel(
     repository: WanAndroidRepository
@@ -13,7 +14,11 @@ class WechatArticleTreeViewModel(
 
     init {
         viewModelScope.launch {
-            _dataList.value = repository.getWechatArticleTree()
+            try {
+                _dataList.value = repository.getWechatArticleTree()
+            } catch (exception: Exception) {
+                Timber.e(exception)
+            }
         }
     }
 

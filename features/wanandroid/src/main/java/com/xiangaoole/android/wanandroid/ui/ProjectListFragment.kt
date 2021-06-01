@@ -32,7 +32,7 @@ class ProjectListFragment : Fragment(R.layout.fragment_project_list),
         Injection.provideProjectListViewModelFactory(requireContext(), cid)
     }
 
-    protected var mAdapter: ProjectAdapter? = null
+    private var mAdapter: ProjectAdapter? = null
 
     private var mInitAdapterJob: Job? = null
 

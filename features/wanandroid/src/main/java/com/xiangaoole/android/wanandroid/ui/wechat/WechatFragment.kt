@@ -2,6 +2,7 @@ package com.xiangaoole.android.wanandroid.ui.wechat
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,6 +28,7 @@ class WechatFragment : Fragment(R.layout.fragment_project),
 
         viewModel.dataList.observe(viewLifecycleOwner) { dataList ->
             if (dataList != null) {
+                binding.tvNoData.isVisible = false
                 initPagerView(dataList)
             }
         }

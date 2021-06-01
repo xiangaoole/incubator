@@ -2,6 +2,7 @@ package com.xiangaoole.android.wanandroid.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,6 +28,7 @@ open class ProjectFragment : Fragment(R.layout.fragment_project),
 
         viewModel.projectTrees.observe(viewLifecycleOwner) { projectTrees ->
             if (projectTrees != null) {
+                binding.tvNoData.isVisible = false
                 initPagerView(projectTrees)
             }
         }
