@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/projectFragment"
-        android:name="com.xiangaoole.android.wanandroid.ui.ProjectFragment"
+        android:name="com.xiangaoole.android.wanandroid.ui.project.ProjectFragment"
         android:label="@string/project"
         tools:layout="@layout/fragment_project_list" />
     <fragment

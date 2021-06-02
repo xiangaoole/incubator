@@ -1,4 +1,4 @@
-package com.xiangaoole.android.wanandroid.ui
+package com.xiangaoole.android.wanandroid.ui.project
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

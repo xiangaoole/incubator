@@ -15,15 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
 import com.xiangaoole.android.wanandroid.model.Project
-import com.xiangaoole.android.wanandroid.ui.ProjectAdapter
-import com.xiangaoole.android.wanandroid.ui.ProjectListFragment
-import com.xiangaoole.android.wanandroid.ui.ProjectLoadStateAdapter
+import com.xiangaoole.android.wanandroid.ui.project.ProjectLoadStateAdapter
 import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * Base Fragment show a RecycleView

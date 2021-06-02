@@ -4,8 +4,8 @@ import android.content.Context
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
-import com.xiangaoole.android.wanandroid.ui.ProjectListViewModel.ProjectListViewModelFactory
-import com.xiangaoole.android.wanandroid.ui.ProjectTreeViewModel.ProjectTreeViewModelFactory
+import com.xiangaoole.android.wanandroid.ui.project.ProjectListViewModel.ProjectListViewModelFactory
+import com.xiangaoole.android.wanandroid.ui.project.ProjectTreeViewModel.ProjectTreeViewModelFactory
 
 /**
  * Class that handles object creation.

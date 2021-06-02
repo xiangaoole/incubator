@@ -1,4 +1,4 @@
-package com.xiangaoole.android.wanandroid.ui.common
+package com.xiangaoole.android.wanandroid.ui.project
 
 import androidx.lifecycle.*
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
@@ -6,29 +6,27 @@ import com.xiangaoole.android.wanandroid.model.ProjectTree
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class WechatArticleTreeViewModel(
-    repository: WanAndroidRepository
-) : ViewModel() {
-    private val _dataList = MutableLiveData<List<ProjectTree>>()
-    val dataList: LiveData<List<ProjectTree>> get() = _dataList
+class ProjectTreeViewModel(repository: WanAndroidRepository) : ViewModel() {
+    private val _projectTrees = MutableLiveData<List<ProjectTree>>()
+    val projectTrees: LiveData<List<ProjectTree>> get() = _projectTrees
 
     init {
         viewModelScope.launch {
             try {
-                _dataList.value = repository.getWechatArticleTree()
+                _projectTrees.value = repository.getProjectTree()
             } catch (exception: Exception) {
                 Timber.e(exception)
             }
         }
     }
 
-    class ViewModelFactory(
-        private val repository: WanAndroidRepository,
+    class ProjectTreeViewModelFactory(
+        private val repository: WanAndroidRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(WechatArticleTreeViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(ProjectTreeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return WechatArticleTreeViewModel(repository) as T
+                return ProjectTreeViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

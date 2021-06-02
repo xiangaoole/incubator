@@ -11,7 +11,6 @@ import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectBinding
 import com.xiangaoole.android.wanandroid.model.ProjectTree
 import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
-import com.xiangaoole.android.wanandroid.ui.common.WechatArticleTreeViewModel
 import com.xiangaoole.android.wanandroid.util.bindView
 import com.xiangaoole.android.wanandroid.util.fromHtml
 
