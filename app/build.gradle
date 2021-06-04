@@ -50,4 +50,6 @@ dependencies {
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
 
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

@@ -1,6 +1,7 @@
 package com.xiangaoole.android.incubator
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -34,5 +35,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     fun toTestTask(view: View) {
         jumpTo(LearnTaskActivity::class)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.d("onSaveInstanceState")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Timber.d("onSaveInstanceState")
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.d("onConfigurationChanged")
     }
 }

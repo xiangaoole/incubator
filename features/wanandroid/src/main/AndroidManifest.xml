@@ -9,6 +9,7 @@
         <activity android:name=".ui.article.ArticleActivity"></activity>
         <activity
             android:name=".ui.WanAndroidActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
     </application>
 
