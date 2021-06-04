@@ -7,26 +7,26 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.databinding.ListItemWechatBinding
-import com.xiangaoole.android.wanandroid.model.Project
-import com.xiangaoole.android.wanandroid.ui.article.ArticleActivity
+import com.xiangaoole.android.wanandroid.model.Wechat
+import com.xiangaoole.android.wanandroid.ui.ArticleActivity
 import timber.log.Timber
 
-class WechatListAdapter : PagingDataAdapter<Project, WechatViewHolder>(DIFF) {
+class WechatListAdapter : PagingDataAdapter<Wechat, WechatViewHolder>(DIFF) {
     companion object {
-        private val DIFF = object : DiffUtil.ItemCallback<Project>() {
-            override fun areItemsTheSame(oldItem: Project, newItem: Project): Boolean {
+        private val DIFF = object : DiffUtil.ItemCallback<Wechat>() {
+            override fun areItemsTheSame(oldItem: Wechat, newItem: Wechat): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Project, newItem: Project): Boolean {
+            override fun areContentsTheSame(oldItem: Wechat, newItem: Wechat): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
     override fun onBindViewHolder(holder: WechatViewHolder, position: Int) {
-        val project = getItem(position)
-        holder.bind(project)
+        val wechat = getItem(position)
+        holder.bind(wechat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WechatViewHolder {
@@ -42,22 +42,22 @@ class WechatViewHolder private constructor(
         binding.cardView.setOnClickListener(::onClick)
     }
 
-    fun bind(project: Project?) {
-        if (project != null) {
-            binding.project = project
+    fun bind(wechat: Wechat?) {
+        if (wechat != null) {
+            binding.wechat = wechat
             binding.executePendingBindings()
         }
     }
 
     private fun onClick(view: View) {
-        binding.project?.let {
+        binding.wechat?.let {
             ArticleActivity.start(
                 view.context,
                 id = it.id,
                 title = it.title,
                 url = it.link
             )
-        } ?: Timber.w("onClick when project is null")
+        } ?: Timber.w("onClick when wechat is null")
     }
 
     companion object {

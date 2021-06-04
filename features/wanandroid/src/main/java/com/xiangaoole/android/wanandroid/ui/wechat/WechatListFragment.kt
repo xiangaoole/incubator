@@ -5,22 +5,22 @@ import androidx.fragment.app.viewModels
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.Injection
-import com.xiangaoole.android.wanandroid.model.Project
+import com.xiangaoole.android.wanandroid.model.Wechat
 import com.xiangaoole.android.wanandroid.ui.common.BaseListFragment
 import kotlinx.coroutines.flow.collectLatest
 
 /**
  * Fragment shows wechat articles list.
  */
-class WechatListFragment : BaseListFragment() {
+class WechatListFragment : BaseListFragment<Wechat>() {
 
-    private val viewModel: WechatArticleListViewModel by viewModels {
+    private val viewModel: WechatListViewModel by viewModels {
         val context = Injection.provideWanAndroidRepository(requireContext())
         val listId = arguments?.getInt(ARG_KEY_ID) ?: -1
-        WechatArticleListViewModel.Factory(context, listId)
+        WechatListViewModel.Factory(context, listId)
     }
 
-    override fun provideDataAdapter(): PagingDataAdapter<Project, out RecyclerView.ViewHolder> {
+    override fun provideDataAdapter(): PagingDataAdapter<Wechat, out RecyclerView.ViewHolder> {
         return WechatListAdapter()
     }
 

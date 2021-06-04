@@ -1,4 +1,4 @@
-package com.xiangaoole.android.wanandroid.ui.project
+package com.xiangaoole.android.wanandroid.ui.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

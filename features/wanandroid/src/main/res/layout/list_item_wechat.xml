@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="project"
-            type="com.xiangaoole.android.wanandroid.model.Project" />
+            name="wechat"
+            type="com.xiangaoole.android.wanandroid.model.Wechat" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -34,7 +34,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{project.author}"
+                android:text="@{wechat.author}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="xiangaoolexiangaoolexiangaoole" />
@@ -43,7 +43,7 @@
                 android:id="@+id/shareDateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{project.niceDate}"
+                android:text="@{wechat.niceDate}"
                 app:layout_constraintBottom_toBottomOf="@+id/authorText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/authorText"
@@ -56,7 +56,7 @@
                 android:layout_marginTop="@dimen/dp_8"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textStyle="bold"
-                app:htmlText="@{project.title}"
+                app:htmlText="@{wechat.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/authorText"
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_8"
-                android:text="@{@string/wechat_and_author(project.author)}"
+                android:text="@{@string/wechat_and_author(wechat.author)}"
                 tools:text="公众号 / 果岭"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

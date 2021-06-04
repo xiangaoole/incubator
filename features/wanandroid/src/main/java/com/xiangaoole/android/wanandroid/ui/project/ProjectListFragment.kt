@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 /**
  * Fragment show project articles list.
  */
-class ProjectListFragment : BaseListFragment() {
+class ProjectListFragment : BaseListFragment<Project>() {
 
     private val viewModel: ProjectListViewModel by viewModels {
         val cid: Int = arguments?.getInt(ARG_KEY_CID) ?: -1

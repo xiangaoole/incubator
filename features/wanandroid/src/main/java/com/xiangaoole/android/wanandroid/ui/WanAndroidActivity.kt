@@ -12,6 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ActivityWanandroidBinding
 
+/**
+ * The Home Activity for WanAndroid. 
+ */
 class WanAndroidActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWanandroidBinding
 

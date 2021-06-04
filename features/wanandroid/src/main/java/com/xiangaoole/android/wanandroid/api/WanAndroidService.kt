@@ -1,9 +1,7 @@
 package com.xiangaoole.android.wanandroid.api
 
 import androidx.lifecycle.LiveData
-import com.xiangaoole.android.wanandroid.model.HttpResult
-import com.xiangaoole.android.wanandroid.model.ProjectList
-import com.xiangaoole.android.wanandroid.model.ProjectTree
+import com.xiangaoole.android.wanandroid.model.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -14,6 +12,12 @@ import retrofit2.http.Query
  * WanAndroid communication setup via Retrofit.
  */
 interface WanAndroidService {
+
+    /**
+     * 项目分类 https://www.wanandroid.com/project/tree/json
+     */
+    @GET("project/tree/json")
+    suspend fun getProjectTree(): HttpResult<List<ProjectTree>>
 
     /**
      * 项目列表
@@ -28,20 +32,14 @@ interface WanAndroidService {
         @Query("cid") cid: Int
     ): HttpResult<ProjectList>
 
-    /**
-     * 项目分类 https://www.wanandroid.com/project/tree/json
-     */
-    @GET("project/tree/json")
-    suspend fun getProjectTree(): HttpResult<List<ProjectTree>>
-
     @GET("wxarticle/chapters/json")
-    suspend fun getWechatArticleTree(): HttpResult<List<ProjectTree>>
+    suspend fun getWechatArticleTree(): HttpResult<List<WechatTree>>
 
     @GET("wxarticle/list/{id}/{page}/json")
     suspend fun getWechatArticles(
         @Path("id") id: Int,
         @Path("page") page: Int
-    ): HttpResult<ProjectList>
+    ): HttpResult<WechatList>
 
 
     companion object {

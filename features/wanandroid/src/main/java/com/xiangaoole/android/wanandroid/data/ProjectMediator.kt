@@ -9,6 +9,7 @@ import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.model.Project
 import timber.log.Timber
 
+@Deprecated(message = "Not used")
 @OptIn(ExperimentalPagingApi::class)
 class ProjectMediator(
     private val cid: Int,

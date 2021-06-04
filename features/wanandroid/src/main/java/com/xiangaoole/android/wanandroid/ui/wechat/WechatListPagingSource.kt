@@ -4,17 +4,17 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.WECHAT_ARTICLE_START_PAGE_INDEX
-import com.xiangaoole.android.wanandroid.model.Project
+import com.xiangaoole.android.wanandroid.model.Wechat
 import timber.log.Timber
 
 /**
  * [PagingSource] for Wechat Articles
  */
-class WechatArticlePagingSource(
+class WechatListPagingSource(
     private val service: WanAndroidService,
     private val id: Int
-) : PagingSource<Int, Project>() {
-    override fun getRefreshKey(state: PagingState<Int, Project>): Int? {
+) : PagingSource<Int, Wechat>() {
+    override fun getRefreshKey(state: PagingState<Int, Wechat>): Int? {
         // We need to get the previous key (or next key if previous is null) of the page
         // that was closest to the most recently accessed index.
         // Anchor position is the most recently accessed index
@@ -24,7 +24,7 @@ class WechatArticlePagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Project> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Wechat> {
         val position = params.key ?: WECHAT_ARTICLE_START_PAGE_INDEX
         return try {
             val response = service.getWechatArticles(id, position)

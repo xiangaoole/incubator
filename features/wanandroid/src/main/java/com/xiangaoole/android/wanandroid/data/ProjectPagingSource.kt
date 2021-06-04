@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.PROJECT_START_PAGE_INDEX
-import com.xiangaoole.android.wanandroid.data.WanAndroidRepository.Companion.PROJECT_PAGE_SIZE
 import com.xiangaoole.android.wanandroid.model.Project
 import timber.log.Timber
 

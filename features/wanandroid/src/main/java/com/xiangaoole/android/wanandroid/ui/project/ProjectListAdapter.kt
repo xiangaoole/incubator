@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.databinding.ListItemProjectBinding
 import com.xiangaoole.android.wanandroid.model.Project
-import com.xiangaoole.android.wanandroid.ui.article.ArticleActivity
+import com.xiangaoole.android.wanandroid.ui.ArticleActivity
 import timber.log.Timber
 
 class ProjectAdapter : PagingDataAdapter<Project, ProjectViewHolder>(PROJECT_DIFF) {

@@ -1,11 +1,10 @@
-package com.xiangaoole.android.wanandroid.ui.article
+package com.xiangaoole.android.wanandroid.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -13,9 +12,6 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.MaterialColors
 import com.just.agentweb.AgentWeb
@@ -26,6 +22,9 @@ import com.xiangaoole.android.wanandroid.Constant
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ActivityArticleBinding
 
+/**
+ * Activity for show contents in WebView.
+ */
 class ArticleActivity : AppCompatActivity() {
 
     private var id: Long = -1L

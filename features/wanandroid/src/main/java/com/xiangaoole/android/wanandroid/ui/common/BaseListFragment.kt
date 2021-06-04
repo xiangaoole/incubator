@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
 import com.xiangaoole.android.wanandroid.model.Project
-import com.xiangaoole.android.wanandroid.ui.project.ProjectLoadStateAdapter
 import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.Job
@@ -24,7 +23,7 @@ import kotlinx.coroutines.launch
 /**
  * Base Fragment show a RecycleView
  */
-abstract class BaseListFragment
+abstract class BaseListFragment<T : Any>
     : Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
 
     private val binding by bindView(FragmentProjectListBinding::bind)
@@ -32,7 +31,7 @@ abstract class BaseListFragment
     /**
      * This [PagingDataAdapter] reference will be null when [onDestroy]
      */
-    protected var mAdapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>? = null
+    protected var mAdapter: PagingDataAdapter<T, out RecyclerView.ViewHolder>? = null
         private set
 
     private var mInitAdapterJob: Job? = null
@@ -50,14 +49,14 @@ abstract class BaseListFragment
     /**
      * provide [PagingDataAdapter] for the data RecyclerView
      */
-    abstract fun provideDataAdapter(): PagingDataAdapter<Project, out RecyclerView.ViewHolder>
+    abstract fun provideDataAdapter(): PagingDataAdapter<T, out RecyclerView.ViewHolder>
 
     /**
      * Load initial data to [mAdapter].
      */
     abstract suspend fun loadData()
 
-    private fun initAdapter(adapter: PagingDataAdapter<Project, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private fun initAdapter(adapter: PagingDataAdapter<T, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mAdapter = adapter
         mInitAdapterJob = lifecycleScope.launch {
             loadData()
