@@ -1,6 +1,5 @@
 package com.xiangaoole.android.wanandroid.api
 
-import androidx.lifecycle.LiveData
 import com.xiangaoole.android.wanandroid.model.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -12,6 +11,20 @@ import retrofit2.http.Query
  * WanAndroid communication setup via Retrofit.
  */
 interface WanAndroidService {
+
+    /**
+     * 置顶文章：https://www.wanandroid.com/article/top/json
+     */
+    @GET("article/top/json")
+    suspend fun getTopArticles(): HttpResult<List<HomeArticle>>
+
+    /**
+     * 首页文章列表：https://www.wanandroid.com/article/list/0/json
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getHomeArticles(
+        @Path("page") page: Int,
+    ): HttpResult<HomeArticleList>
 
     /**
      * 项目分类 https://www.wanandroid.com/project/tree/json
@@ -43,9 +56,8 @@ interface WanAndroidService {
 
 
     companion object {
-        const val COMPLETE_PROJECT_CID: Int = 294
-        const val PROJECT_START_PAGE_INDEX: Int = 1
-        const val WECHAT_ARTICLE_START_PAGE_INDEX: Int = 1
+        const val DEFAULT_START_PAGE_INDEX: Int = 1
+        const val OLD_START_PAGE_INDEX: Int = 0
 
         private const val BASE_URL = "https://www.wanandroid.com"
 

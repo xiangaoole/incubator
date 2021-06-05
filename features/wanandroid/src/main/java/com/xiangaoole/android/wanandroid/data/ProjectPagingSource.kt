@@ -3,7 +3,7 @@ package com.xiangaoole.android.wanandroid.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
-import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.PROJECT_START_PAGE_INDEX
+import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.DEFAULT_START_PAGE_INDEX
 import com.xiangaoole.android.wanandroid.model.Project
 import timber.log.Timber
 
@@ -22,7 +22,7 @@ class ProjectPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Project> {
-        val position = params.key ?: PROJECT_START_PAGE_INDEX
+        val position = params.key ?: DEFAULT_START_PAGE_INDEX
         return try {
             val response = service.getProject(position, cid)
             if (response.errorCode < 0) {
@@ -38,7 +38,7 @@ class ProjectPagingSource(
             val projects = response.data.datas
             LoadResult.Page(
                 data = projects,
-                prevKey = if (position == PROJECT_START_PAGE_INDEX) null else position - 1,
+                prevKey = if (position == DEFAULT_START_PAGE_INDEX) null else position - 1,
                 nextKey = nextKey
             )
         } catch (exception: Exception) {

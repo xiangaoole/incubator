@@ -3,7 +3,7 @@ package com.xiangaoole.android.wanandroid.ui.wechat
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
-import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.WECHAT_ARTICLE_START_PAGE_INDEX
+import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.DEFAULT_START_PAGE_INDEX
 import com.xiangaoole.android.wanandroid.model.Wechat
 import timber.log.Timber
 
@@ -25,7 +25,7 @@ class WechatListPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Wechat> {
-        val position = params.key ?: WECHAT_ARTICLE_START_PAGE_INDEX
+        val position = params.key ?: DEFAULT_START_PAGE_INDEX
         return try {
             val response = service.getWechatArticles(id, position)
             if (response.errorCode < 0) {
@@ -41,7 +41,7 @@ class WechatListPagingSource(
             val projects = response.data.datas
             LoadResult.Page(
                 data = projects,
-                prevKey = if (position == WECHAT_ARTICLE_START_PAGE_INDEX) null else position - 1,
+                prevKey = if (position == DEFAULT_START_PAGE_INDEX) null else position - 1,
                 nextKey = nextKey
             )
         } catch (exception: Exception) {

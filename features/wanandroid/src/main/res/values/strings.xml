@@ -10,4 +10,6 @@
     <string name="home">Home</string>
     <string name="wechat">Wechat</string>
     <string name="wechat_and_author">Wechat / %1$s</string>
+    <string name="top_tip">置顶</string>
+    <string name="new_tip">新</string>
 </resources>

@@ -3,7 +3,7 @@ package com.xiangaoole.android.wanandroid.data
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
-import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.PROJECT_START_PAGE_INDEX
+import com.xiangaoole.android.wanandroid.api.WanAndroidService.Companion.DEFAULT_START_PAGE_INDEX
 import com.xiangaoole.android.wanandroid.db.ProjectRemoteKey
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.model.Project
@@ -29,7 +29,7 @@ class ProjectMediator(
         val position = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKey = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKey?.nextKey?.minus(1) ?: PROJECT_START_PAGE_INDEX
+                remoteKey?.nextKey?.minus(1) ?: DEFAULT_START_PAGE_INDEX
             }
             LoadType.APPEND -> {
                 val remoteKey = getRemoteKeyForLastItem(state)
@@ -56,7 +56,7 @@ class ProjectMediator(
 
             val nextKey = if (endOfPaginationReached) null else position + 1
             val prevKey =
-                if (position == PROJECT_START_PAGE_INDEX) null else position - 1
+                if (position == DEFAULT_START_PAGE_INDEX) null else position - 1
             val keys = projects.map { ProjectRemoteKey(it.id, prevKey, nextKey) }
 
             database.withTransaction {

@@ -5,10 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
-import com.xiangaoole.android.wanandroid.model.Project
-import com.xiangaoole.android.wanandroid.model.ProjectTree
-import com.xiangaoole.android.wanandroid.model.Wechat
-import com.xiangaoole.android.wanandroid.model.WechatTree
+import com.xiangaoole.android.wanandroid.model.*
+import com.xiangaoole.android.wanandroid.ui.home.HomeArticlesPagingSource
 import com.xiangaoole.android.wanandroid.ui.wechat.WechatListPagingSource
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
@@ -47,7 +45,7 @@ class WanAndroidRepository(
     }
 
     fun getWechatArticles(id: Int): Flow<PagingData<Wechat>> {
-        Timber.d("getCompleteProjectsStream")
+        Timber.d("get WechatArticles")
 
         val pagingSourceFactory = { WechatListPagingSource(service, id) }
 
@@ -55,6 +53,20 @@ class WanAndroidRepository(
         return Pager(
             config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
             //remoteMediator = ProjectMediator(cid, service, database),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
+
+    /**
+     * Get Home Articles
+     */
+    fun getHomeArticles(): Flow<PagingData<HomeArticle>> {
+        Timber.d("get HomeArticles")
+
+        val pagingSourceFactory = { HomeArticlesPagingSource(service) }
+
+        return Pager(
+            config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }

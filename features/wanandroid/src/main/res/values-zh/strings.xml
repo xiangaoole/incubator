@@ -10,4 +10,6 @@
     <string name="home">首页</string>
     <string name="wechat">公众号</string>
     <string name="wechat_and_author">公众号 / %1$s</string>
+    <string name="top_tip">置顶</string>
+    <string name="new_tip">新</string>
 </resources>

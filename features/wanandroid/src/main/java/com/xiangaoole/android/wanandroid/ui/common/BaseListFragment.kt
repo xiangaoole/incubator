@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.R
-import com.xiangaoole.android.wanandroid.databinding.FragmentProjectListBinding
-import com.xiangaoole.android.wanandroid.model.Project
+import com.xiangaoole.android.wanandroid.databinding.FragmentCommonListBinding
 import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.Job
@@ -24,9 +23,9 @@ import kotlinx.coroutines.launch
  * Base Fragment show a RecycleView
  */
 abstract class BaseListFragment<T : Any>
-    : Fragment(R.layout.fragment_project_list), WanAndroidActivity.ChildFragmentInterface {
+    : Fragment(R.layout.fragment_common_list), WanAndroidActivity.ChildFragmentInterface {
 
-    private val binding by bindView(FragmentProjectListBinding::bind)
+    private val binding by bindView(FragmentCommonListBinding::bind)
 
     /**
      * This [PagingDataAdapter] reference will be null when [onDestroy]
