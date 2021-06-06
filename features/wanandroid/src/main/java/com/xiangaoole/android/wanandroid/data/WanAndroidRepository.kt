@@ -10,6 +10,7 @@ import com.xiangaoole.android.wanandroid.ui.home.HomeArticlesPagingSource
 import com.xiangaoole.android.wanandroid.ui.wechat.WechatListPagingSource
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
+import kotlin.jvm.Throws
 
 class WanAndroidRepository(
     private val service: WanAndroidService,
@@ -69,6 +70,14 @@ class WanAndroidRepository(
             config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = pagingSourceFactory
         ).flow
+    }
+
+    /**
+     * Get Banners
+     */
+    @Throws(Exception::class)
+    suspend fun getBanners(): List<Banner> {
+        return service.getBanners().data
     }
 
     companion object {

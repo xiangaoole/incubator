@@ -62,4 +62,10 @@ object Versions {
      *
      */
     const val agentWeb = "v4.1.9-androidx"
+
+    /**
+     * https://developer.android.google.cn/jetpack/androidx/releases/benchmark
+     * - classpath "androidx.benchmark:benchmark-gradle-plugin:"
+     */
+    const val benchmark = "1.0.0"
 }

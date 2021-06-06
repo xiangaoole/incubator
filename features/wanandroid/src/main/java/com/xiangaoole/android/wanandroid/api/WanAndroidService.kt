@@ -13,6 +13,12 @@ import retrofit2.http.Query
 interface WanAndroidService {
 
     /**
+     * 首页滚动横幅：https://www.wanandroid.com/banner/json
+     */
+    @GET("banner/json")
+    suspend fun getBanners(): HttpResult<List<Banner>>
+
+    /**
      * 置顶文章：https://www.wanandroid.com/article/top/json
      */
     @GET("article/top/json")

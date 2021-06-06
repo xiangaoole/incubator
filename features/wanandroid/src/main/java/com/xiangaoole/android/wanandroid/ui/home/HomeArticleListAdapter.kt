@@ -4,41 +4,113 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.xiangaoole.android.wanandroid.R
+import com.xiangaoole.android.wanandroid.databinding.BannerHomeBinding
 import com.xiangaoole.android.wanandroid.databinding.ListItemHomeBinding
+import com.xiangaoole.android.wanandroid.model.Banner
 import com.xiangaoole.android.wanandroid.model.HomeArticle
 import com.xiangaoole.android.wanandroid.ui.ArticleActivity
 import com.xiangaoole.android.wanandroid.util.htmlText
+import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.listener.OnBannerListener
 import timber.log.Timber
 
-class HomeArticleListAdapter : PagingDataAdapter<HomeArticle, HomeArticleViewHolder>(DIFF) {
+class HomeArticleListAdapter(
+    private val lifecycleOwner: LifecycleOwner
+) : PagingDataAdapter<ListItemModel, ViewHolder>(DIFF) {
     companion object {
-        private val DIFF = object : DiffUtil.ItemCallback<HomeArticle>() {
-            override fun areItemsTheSame(oldItem: HomeArticle, newItem: HomeArticle): Boolean {
-                return oldItem.id == newItem.id
+        private val DIFF = object : DiffUtil.ItemCallback<ListItemModel>() {
+            override fun areItemsTheSame(oldItem: ListItemModel, newItem: ListItemModel): Boolean {
+                return (oldItem is ListItemModel.Header && newItem is ListItemModel.Header) ||
+                        (oldItem is ListItemModel.Item && newItem is ListItemModel.Item &&
+                                oldItem.data.id == newItem.data.id)
             }
 
-            override fun areContentsTheSame(oldItem: HomeArticle, newItem: HomeArticle): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListItemModel,
+                newItem: ListItemModel
+            ): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
-    override fun onBindViewHolder(holder: HomeArticleViewHolder, position: Int) {
-        val article = getItem(position)
-        holder.bind(article)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        when (val model = getItem(position)) {
+            is ListItemModel.Header -> (holder as HomeHeaderViewHolder).bind(model.banners)
+            is ListItemModel.Item -> (holder as HomeArticleViewHolder).bind(model.data)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeArticleViewHolder {
-        return HomeArticleViewHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return if (viewType == R.layout.list_item_home) {
+            HomeArticleViewHolder.create(parent)
+        } else {
+            HomeHeaderViewHolder.create(parent, lifecycleOwner)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is ListItemModel.Header -> R.layout.banner_home
+            is ListItemModel.Item -> R.layout.list_item_home
+            null -> throw UnsupportedOperationException("Unknown view")
+        }
     }
 }
 
+/**
+ * ViewHolder for List header
+ */
+class HomeHeaderViewHolder(
+    private val binding: BannerHomeBinding,
+    private val lifecycleOwner: LifecycleOwner
+) : ViewHolder(binding.root) {
+
+    private val clickListener =
+        OnBannerListener<Banner> { data, _ ->
+            data?.let {
+                ArticleActivity.start(
+                    binding.root.context,
+                    id = it.id.toLong(),
+                    title = it.title,
+                    url = it.url
+                )
+            } ?: Timber.w("onClick when data is null")
+        }
+
+    init {
+        binding.banner.apply {
+            addBannerLifecycleObserver(lifecycleOwner)
+            indicator = CircleIndicator(context)
+            setAdapter(BannerAdapter())
+            setOnBannerListener(clickListener)
+        }
+    }
+
+    fun bind(banners: List<Banner>?) {
+        binding.banner.setDatas(banners)
+    }
+
+    companion object {
+        fun create(parent: ViewGroup, lifecycleOwner: LifecycleOwner): HomeHeaderViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = BannerHomeBinding.inflate(layoutInflater, parent, false)
+            return HomeHeaderViewHolder(binding, lifecycleOwner)
+        }
+    }
+}
+
+/**
+ * ViewHolder for List body
+ */
 class HomeArticleViewHolder private constructor(
     private val binding: ListItemHomeBinding
-) : RecyclerView.ViewHolder(binding.root) {
+) : ViewHolder(binding.root) {
 
     private var article: HomeArticle? = null
 

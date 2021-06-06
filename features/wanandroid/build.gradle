@@ -38,4 +38,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.navigation}")
 
     implementation("com.github.Justson.AgentWeb:agentweb-core:${Versions.agentWeb}")
+
+    // for banner
+    implementation "io.github.youth5201314:banner:2.2.2"
 }

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 abstract class BaseListFragment<T : Any>
     : Fragment(R.layout.fragment_common_list), WanAndroidActivity.ChildFragmentInterface {
 
-    private val binding by bindView(FragmentCommonListBinding::bind)
+    protected val binding by bindView(FragmentCommonListBinding::bind)
 
     /**
      * This [PagingDataAdapter] reference will be null when [onDestroy]
@@ -55,7 +55,7 @@ abstract class BaseListFragment<T : Any>
      */
     abstract suspend fun loadData()
 
-    private fun initAdapter(adapter: PagingDataAdapter<T, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    protected open fun initAdapter(adapter: PagingDataAdapter<T, out RecyclerView.ViewHolder>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mAdapter = adapter
         mInitAdapterJob = lifecycleScope.launch {
             loadData()
