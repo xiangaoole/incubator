@@ -10,6 +10,17 @@
     <string name="home">Home</string>
     <string name="wechat">Wechat</string>
     <string name="wechat_and_author">Wechat / %1$s</string>
-    <string name="top_tip">置顶</string>
-    <string name="new_tip">新</string>
+    <string name="top_tip">Top</string>
+    <string name="new_tip">New</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="login">Login</string>
+    <string name="no_account">No account yet? Go to register.</string>
+    <string name="user_login">User login</string>
+    <string name="login_tip">Use WanAndroid account to login.</string>
+    <string name="login_success">Login success.</string>
+    <string name="username_not_empty">Username can\'t be empty</string>
+    <string name="password_not_empty">Password can\'t be empty</string>
+    <string name="not_login">Not login</string>
+    <string name="logout">Logout</string>
 </resources>

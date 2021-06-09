@@ -3,14 +3,22 @@ package com.xiangaoole.android.wanandroid.api
 import com.xiangaoole.android.wanandroid.model.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * WanAndroid communication setup via Retrofit.
  */
 interface WanAndroidService {
+
+    /**
+     * 用户登录 http://www.wanandroid.com/user/login
+     */
+    @POST("user/login")
+    @FormUrlEncoded
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): HttpResult<LoginData>
 
     /**
      * 首页滚动横幅：https://www.wanandroid.com/banner/json

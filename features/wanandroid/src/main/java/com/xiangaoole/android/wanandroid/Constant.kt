@@ -3,6 +3,14 @@ package com.xiangaoole.android.wanandroid
 object Constant {
 
     /**
+     * Login Data
+     */
+    const val LOGIN_KEY = "login"
+    const val USERNAME_KEY = "username"
+    const val PASSWORD_KEY = "password"
+    const val TOKEN_KEY = "token"
+
+    /**
      * ID key
      */
     const val CONTENT_ID_KEY = "id"

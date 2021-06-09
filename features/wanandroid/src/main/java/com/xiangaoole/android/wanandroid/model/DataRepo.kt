@@ -113,3 +113,15 @@ data class Wechat(
     @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
     @Json(name = "link") val link: String, // https://www.wanandroid.com/blog/show/{link}
 )
+
+// 登录信息
+data class LoginData(
+    @Json(name = "collectIds") val collectIds: List<String>,
+    @Json(name = "email") val email: String,
+    @Json(name = "icon") val icon: String,
+    @Json(name = "id") val id: Int,
+    @Json(name = "password") val password: String,
+    @Json(name = "token") val token: String,
+    @Json(name = "type") val type: Int,
+    @Json(name = "username") val username: String
+)

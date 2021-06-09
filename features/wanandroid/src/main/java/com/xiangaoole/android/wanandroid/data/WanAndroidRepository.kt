@@ -80,6 +80,9 @@ class WanAndroidRepository(
         return service.getBanners().data
     }
 
+    suspend fun login(username: String, password: String) =
+        service.login(username, password)
+
     companion object {
         const val PROJECT_PAGE_SIZE = 15
     }
