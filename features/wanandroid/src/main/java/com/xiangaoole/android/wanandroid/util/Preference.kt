@@ -4,7 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.xiangaoole.android.wanandroid.Constant
+import com.xiangaoole.android.incubator.App
+import com.xiangaoole.android.wanandroid.constant.Constant
 import com.xiangaoole.android.wanandroid.model.LoginData
 
 class Preference {
@@ -15,11 +16,11 @@ class Preference {
         @Volatile
         private lateinit var sharedPreferences: SharedPreferences
 
-        fun getPrefs(context: Context): SharedPreferences {
+        fun getPrefs(): SharedPreferences {
             if (!::sharedPreferences.isInitialized) {
                 synchronized(this) {
                     if (!::sharedPreferences.isInitialized) {
-                        sharedPreferences = context.applicationContext.getSharedPreferences(
+                        sharedPreferences = App.context.getSharedPreferences(
                             FILE_NAME,
                             Context.MODE_PRIVATE
                         )
@@ -29,8 +30,22 @@ class Preference {
             return sharedPreferences
         }
 
-        fun saveLoginData(application: Application, data: LoginData?) {
-            getPrefs(application).edit {
+        fun <T> getPref(name: String, default: T): T =
+            with(Preference.getPrefs()) {
+                val result = when (default) {
+                    is Long -> getLong(name, default)
+                    is String -> getString(name, default)
+                    is Int -> getInt(name, default)
+                    is Boolean -> getBoolean(name, default)
+                    is Float -> getFloat(name, default)
+                    else -> throw IllegalArgumentException("${default!!::class.qualifiedName}")
+                }
+                @Suppress("UNCHECKED_CAST")
+                result as T
+            }
+
+        fun saveLoginData(data: LoginData?) {
+            getPrefs().edit {
                 if (data == null) {
                     putBoolean(Constant.LOGIN_KEY, false)
                     putString(Constant.USERNAME_KEY, "")

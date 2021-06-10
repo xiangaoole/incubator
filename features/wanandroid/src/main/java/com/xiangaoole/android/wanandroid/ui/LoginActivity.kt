@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginSuccess(data: LoginData) {
         showToast(getString(R.string.login_success))
-        Preference.saveLoginData(application, data)
+        Preference.saveLoginData(data)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

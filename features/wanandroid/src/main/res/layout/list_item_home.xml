@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,15 +14,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/tvTopTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:background="@drawable/bg_hot_tag"
             android:paddingHorizontal="@dimen/dp_4"
             android:paddingVertical="@dimen/dp_2"
@@ -31,14 +30,13 @@
             android:textColor="@color/Red"
             android:textSize="@dimen/sp_10"
             app:layout_constraintBaseline_toBaselineOf="@+id/authorText"
-            app:layout_constraintEnd_toStartOf="@id/tvNewTip"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvNewTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:background="@drawable/bg_hot_tag"
             android:paddingHorizontal="@dimen/dp_4"
             android:paddingVertical="@dimen/dp_2"
@@ -46,14 +44,13 @@
             android:textColor="@color/Red"
             android:textSize="@dimen/sp_10"
             app:layout_constraintBaseline_toBaselineOf="@+id/authorText"
-            app:layout_constraintEnd_toStartOf="@id/tvArticleTag"
             app:layout_constraintStart_toEndOf="@id/tvTopTip" />
 
         <TextView
             android:id="@+id/tvArticleTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:background="@drawable/bg_article_tag"
             android:paddingHorizontal="@dimen/dp_4"
             android:paddingVertical="@dimen/dp_2"
@@ -61,14 +58,15 @@
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/sp_10"
             app:layout_constraintBaseline_toBaselineOf="@+id/authorText"
-            app:layout_constraintEnd_toStartOf="@id/authorText"
             app:layout_constraintStart_toEndOf="@id/tvNewTip" />
 
         <TextView
             android:id="@+id/authorText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/item_author"
@@ -89,16 +87,29 @@
             app:layout_constraintTop_toTopOf="@+id/authorText"
             tools:text="2021-01-01 12:00" />
 
+        <ImageView
+            android:id="@+id/ivThumbnail"
+            android:layout_width="@dimen/item_img_width"
+            android:layout_height="@dimen/item_img_height"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/authorText" />
+
         <TextView
             android:id="@+id/titleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textAppearance="?attr/textAppearanceSubtitle2"
             android:textColor="@color/item_title"
             android:textSize="@dimen/sp_16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
             app:layout_constraintTop_toBottomOf="@id/authorText"
             tools:text="@string/test_long_single_line_text" />
 
@@ -106,13 +117,16 @@
             android:id="@+id/chapterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/item_chapter"
             android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
             app:layout_constraintTop_toBottomOf="@+id/titleText"
+            app:layout_constraintVertical_bias="1.0"
             tools:text="内推 / 优质内推" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

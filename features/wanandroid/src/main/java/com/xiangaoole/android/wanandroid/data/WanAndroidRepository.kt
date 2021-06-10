@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.xiangaoole.android.wanandroid.api.WanAndroidService
+import com.xiangaoole.android.wanandroid.data.paging.BasePagingSource
 import com.xiangaoole.android.wanandroid.db.WanAndroidDatabase
 import com.xiangaoole.android.wanandroid.model.*
 import com.xiangaoole.android.wanandroid.ui.home.HomeArticlesPagingSource
@@ -21,11 +22,15 @@ class WanAndroidRepository(
         Timber.d("getCompleteProjectsStream")
 
         //val pagingSourceFactory = { database.projectDao().getProjectsByChapterId(cid) }
-        val pagingSourceFactory = { ProjectPagingSource(service, cid) }
+        val pagingSourceFactory = {
+            BasePagingSource(service, false) { position ->
+                this.getProject(position, cid)
+            }
+        }
 
         //@OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = false),
             //remoteMediator = ProjectMediator(cid, service, database),
             pagingSourceFactory = pagingSourceFactory
         ).flow
@@ -52,7 +57,7 @@ class WanAndroidRepository(
 
         //@OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = false),
             //remoteMediator = ProjectMediator(cid, service, database),
             pagingSourceFactory = pagingSourceFactory
         ).flow
@@ -67,7 +72,7 @@ class WanAndroidRepository(
         val pagingSourceFactory = { HomeArticlesPagingSource(service) }
 
         return Pager(
-            config = PagingConfig(pageSize = PROJECT_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
@@ -80,10 +85,27 @@ class WanAndroidRepository(
         return service.getBanners().data
     }
 
+    fun getCollectionArticles(): Flow<PagingData<CollectionArticle>> {
+        Timber.d("get getCollectionArticles")
+
+        val pagingSourceFactory = {
+            BasePagingSource(service, true) { position ->
+                this.getCollectList(position)
+            }
+        }
+
+        return Pager(
+            config = PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
+
     suspend fun login(username: String, password: String) =
         service.login(username, password)
 
+    suspend fun logout() = service.logout()
+
     companion object {
-        const val PROJECT_PAGE_SIZE = 15
+        const val DEFAULT_PAGE_SIZE = 15
     }
 }

@@ -20,6 +20,7 @@ import com.xiangaoole.android.wanandroid.ui.common.OnScrollToTop
 import com.xiangaoole.android.wanandroid.util.DialogUtil
 import com.xiangaoole.android.wanandroid.util.Preference
 import com.xiangaoole.android.wanandroid.viewmodel.WanAndroidViewModel
+import com.xiangaoole.android.wanandroid.widget.CustomToast
 
 /**
  * The Home Activity for WanAndroid.
@@ -40,9 +41,18 @@ class WanAndroidActivity : AppCompatActivity() {
         WanAndroidViewModel.Factory(repository, application)
     }
 
+    /**
+     * DrawerLayout menu 点击事件
+     */
     private val mDrawerNavItemSelectedListener =
         NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.collection -> {
+                    Intent(this, CollectionActivity::class.java).run {
+                        startActivity(this)
+                    }
+                    true
+                }
                 R.id.logout -> {
                     logout()
                     true
@@ -55,9 +65,14 @@ class WanAndroidActivity : AppCompatActivity() {
         DialogUtil.getConfirmDialog(
             this, getString(R.string.confirm_logout)
         ) { _, _ ->
+            viewModel.logout()
+        }.show()
+    }
 
-            Preference.saveLoginData(application, null)
-            viewModel.loadLoginData()
+    private fun logoutSuccess(success: Boolean) {
+        if (success) {
+            Preference.saveLoginData(null)
+            CustomToast(this, getString(R.string.logout_success)).show()
         }
     }
 
@@ -87,7 +102,22 @@ class WanAndroidActivity : AppCompatActivity() {
 
         binding.fabButton.setOnClickListener(::onFabButtonClick)
 
+        initViewModelObserve()
         initDrawerNavView()
+    }
+
+    private fun initViewModelObserve() {
+        viewModel.logoutSuccess.observe(this) {
+            if (it != null) {
+                logoutSuccess(it)
+                viewModel.logoutSuccessDone()
+            }
+        }
+        viewModel.error.observe(this) {
+            if (it != null) {
+                CustomToast(this, it)
+            }
+        }
     }
 
     private fun initDrawerNavView() {

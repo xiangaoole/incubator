@@ -52,7 +52,7 @@ data class HomeArticle(
     @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
     @Json(name = "shareUser") val shareUser: String?,
     @Json(name = "superChapterName") val superChapterName: String = "",
-    @Json(name = "tags") val tags: List<Tag>,
+    @Json(name = "tags") val tags: List<Tag> = emptyList(),
     @Json(name = "title") val title: String = "",
     var top: Boolean = false
 )
@@ -104,14 +104,19 @@ data class Wechat(
 data class CollectionArticle(
     @Json(name = "author") val author: String,
     @Json(name = "chapterId") val chapterId: Long,
-    @Json(name = "chapterName") val chapterName: String,
+    @Json(name = "chapterName") val chapterName: String? = "",
     @Json(name = "desc") val desc: String,
-    @Json(name = "envelopePic") val envelopePic: String,
+    @Json(name = "envelopePic") val envelopePic: String?,
+    @Json(name = "fresh") val fresh: Boolean = false,
     @Json(name = "id") val id: Long,
     @Json(name = "link") val link: String,
     @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
     @Json(name = "publishTime") val publishTime: Long, // Date millis
+    @Json(name = "shareUser") val shareUser: String?,
+    @Json(name = "superChapterName") val superChapterName: String? = "",
+    @Json(name = "tags") val tags: List<Tag>?,
     @Json(name = "title") val title: String,
+    var top: Boolean = false
 )
 
 // 登录信息

@@ -9,7 +9,7 @@ fun Context.showToast(message: String) {
 }
 
 fun <T> Context.getPref(name: String, default: T): T =
-    with(Preference.getPrefs(applicationContext)) {
+    with(Preference.getPrefs()) {
         val result = when (default) {
             is Long -> getLong(name, default)
             is String -> getString(name, default)

@@ -1,4 +1,4 @@
-package com.xiangaoole.android.wanandroid
+package com.xiangaoole.android.wanandroid.constant
 
 object Constant {
 

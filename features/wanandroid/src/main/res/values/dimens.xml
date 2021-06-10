@@ -26,4 +26,6 @@
     <dimen name="banner_home_height">230dp</dimen>
     <dimen name="project_name_size">24sp</dimen>
     <dimen name="avatar_size">100dp</dimen>
+    <dimen name="item_img_width">120dp</dimen>
+    <dimen name="item_img_height">90dp</dimen>
 </resources>

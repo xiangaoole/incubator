@@ -14,6 +14,7 @@ import com.xiangaoole.android.wanandroid.databinding.ListItemHomeBinding
 import com.xiangaoole.android.wanandroid.model.Banner
 import com.xiangaoole.android.wanandroid.model.HomeArticle
 import com.xiangaoole.android.wanandroid.ui.ArticleActivity
+import com.xiangaoole.android.wanandroid.util.bindUrl
 import com.xiangaoole.android.wanandroid.util.htmlText
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
@@ -136,6 +137,10 @@ class HomeArticleViewHolder private constructor(
                 chapterName.isNotEmpty() -> chapterName
                 superChapterName.isNotEmpty() -> superChapterName
                 else -> ""
+            }
+            binding.ivThumbnail.isVisible = envelopePic.isNotBlank()
+            if (envelopePic.isNotBlank()) {
+                binding.ivThumbnail.bindUrl(envelopePic)
             }
         }
     }

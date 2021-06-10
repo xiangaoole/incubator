@@ -1,9 +1,17 @@
 package com.xiangaoole.android.wanandroid.api
 
+import com.xiangaoole.android.incubator.App
+import com.xiangaoole.android.wanandroid.constant.Constant
+import com.xiangaoole.android.wanandroid.constant.HttpHelper
+import com.xiangaoole.android.wanandroid.http.interceptor.HeaderInterceptor
+import com.xiangaoole.android.wanandroid.http.interceptor.SaveCookieInterceptor
 import com.xiangaoole.android.wanandroid.model.*
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.io.File
 
 /**
  * WanAndroid communication setup via Retrofit.
@@ -97,10 +105,24 @@ interface WanAndroidService {
 
         fun create(): WanAndroidService {
             return Retrofit.Builder()
+                .client(getOkHttpClient())
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
                 .create(WanAndroidService::class.java)
         }
+
+        private fun getOkHttpClient(): OkHttpClient {
+            val builder = OkHttpClient.Builder()
+            val cacheFile = File(App.context.cacheDir, "cache")
+            val cache = Cache(cacheFile, HttpHelper.MAX_CACHE_SIZE)
+            return builder.apply {
+                addInterceptor(SaveCookieInterceptor())
+                addInterceptor(HeaderInterceptor())
+                cache(cache)
+                retryOnConnectionFailure(true)
+            }.build()
+        }
+
     }
 }

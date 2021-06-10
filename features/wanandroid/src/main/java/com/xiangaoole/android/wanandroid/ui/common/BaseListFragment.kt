@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentCommonListBinding
 import com.xiangaoole.android.wanandroid.util.bindView
+import com.xiangaoole.android.wanandroid.widget.CustomToast
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -103,15 +104,14 @@ abstract class BaseListFragment<T : Any>
         binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
 
         // Toast error state
-        val errorState = loadState.source.prepend as? LoadState.Error
-            ?: loadState.source.append as? LoadState.Error
-            ?: loadState.prepend as? LoadState.Error
-            ?: loadState.append as? LoadState.Error
-        errorState?.let {
-            Toast.makeText(
-                context, "\uD83D\uDE28 Wooops ${it.error}", Toast.LENGTH_LONG
-            ).show()
-        }
+        val errorState =
+            loadState.source.refresh as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.source.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+        errorState?.error?.message?.let { msg -> CustomToast(requireContext(), msg).show() }
+
     }
 
     companion object {

@@ -18,7 +18,7 @@ import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.NestedScrollAgentWebView
 import com.just.agentweb.WebChromeClient
-import com.xiangaoole.android.wanandroid.Constant
+import com.xiangaoole.android.wanandroid.constant.Constant
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ActivityArticleBinding
 
