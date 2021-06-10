@@ -23,4 +23,5 @@
     <string name="password_not_empty">Password can\'t be empty</string>
     <string name="not_login">Not login</string>
     <string name="logout">Logout</string>
+    <string name="confirm_logout">确认退出登录？</string>
 </resources>

@@ -33,6 +33,10 @@ class WanAndroidViewModel(
         }
     }
 
+    fun logout() {
+
+    }
+
     class Factory(
         private val repository: WanAndroidRepository,
         private val application: Application

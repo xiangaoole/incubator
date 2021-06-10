@@ -2,15 +2,15 @@ package com.xiangaoole.android.wanandroid.ui.wechat
 
 import androidx.lifecycle.*
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
-import com.xiangaoole.android.wanandroid.model.WechatTree
+import com.xiangaoole.android.wanandroid.model.WechatBranch
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class WechatTreeViewModel(
     repository: WanAndroidRepository,
 ) : ViewModel() {
-    private val _dataList = MutableLiveData<List<WechatTree>>()
-    val dataList: LiveData<List<WechatTree>> get() = _dataList
+    private val _dataList = MutableLiveData<List<WechatBranch>>()
+    val dataList: LiveData<List<WechatBranch>> get() = _dataList
 
     init {
         viewModelScope.launch {

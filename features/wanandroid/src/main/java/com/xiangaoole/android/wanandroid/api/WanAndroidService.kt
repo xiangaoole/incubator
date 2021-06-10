@@ -21,6 +21,26 @@ interface WanAndroidService {
     ): HttpResult<LoginData>
 
     /**
+     * 退出登录 http://www.wanandroid.com/user/logout/json
+     *
+     * 服务端会让客户端清除 Cookie（即cookie max-Age=0），如果客户
+     * 端 Cookie 实现合理，可以实现自动清理，如果本地做了用户账号密码和
+     * 保存，及时清理
+     */
+    @GET("user/logout/json")
+    suspend fun logout(): HttpResult<Any>
+
+    /**
+     * 收藏的文章列表
+     *
+     * @param page 页码，拼接在链接中，从 0 开始
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectList(
+        @Path("page") page: Int
+    ): HttpResult<BaseListData<CollectionArticle>>
+
+    /**
      * 首页滚动横幅：https://www.wanandroid.com/banner/json
      */
     @GET("banner/json")
@@ -38,7 +58,7 @@ interface WanAndroidService {
     @GET("article/list/{page}/json")
     suspend fun getHomeArticles(
         @Path("page") page: Int,
-    ): HttpResult<HomeArticleList>
+    ): HttpResult<BaseListData<HomeArticle>>
 
     /**
      * 项目分类 https://www.wanandroid.com/project/tree/json
@@ -57,16 +77,16 @@ interface WanAndroidService {
     suspend fun getProject(
         @Path("page") page: Int,
         @Query("cid") cid: Int
-    ): HttpResult<ProjectList>
+    ): HttpResult<BaseListData<Project>>
 
     @GET("wxarticle/chapters/json")
-    suspend fun getWechatArticleTree(): HttpResult<List<WechatTree>>
+    suspend fun getWechatArticleTree(): HttpResult<List<WechatBranch>>
 
     @GET("wxarticle/list/{id}/{page}/json")
     suspend fun getWechatArticles(
         @Path("id") id: Int,
         @Path("page") page: Int
-    ): HttpResult<WechatList>
+    ): HttpResult<BaseListData<Wechat>>
 
 
     companion object {

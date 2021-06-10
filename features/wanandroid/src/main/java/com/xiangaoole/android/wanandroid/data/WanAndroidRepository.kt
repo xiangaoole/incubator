@@ -41,7 +41,7 @@ class WanAndroidRepository(
     /**
      * Get Wechat Article Tree
      */
-    suspend fun getWechatArticleTree(): List<WechatTree> {
+    suspend fun getWechatArticleTree(): List<WechatBranch> {
         return service.getWechatArticleTree().data
     }
 

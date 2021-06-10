@@ -2,7 +2,6 @@ package com.xiangaoole.android.wanandroid.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +16,10 @@ import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ActivityWanandroidBinding
 import com.xiangaoole.android.wanandroid.databinding.LayoutNavHeaderBinding
+import com.xiangaoole.android.wanandroid.ui.common.OnScrollToTop
+import com.xiangaoole.android.wanandroid.util.DialogUtil
 import com.xiangaoole.android.wanandroid.util.Preference
 import com.xiangaoole.android.wanandroid.viewmodel.WanAndroidViewModel
-import timber.log.Timber
 
 /**
  * The Home Activity for WanAndroid.
@@ -44,13 +44,22 @@ class WanAndroidActivity : AppCompatActivity() {
         NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.logout -> {
-                    Preference.saveLoginData(application, null)
-                    viewModel.loadLoginData()
+                    logout()
                     true
                 }
                 else -> false
             }
         }
+
+    private fun logout() {
+        DialogUtil.getConfirmDialog(
+            this, getString(R.string.confirm_logout)
+        ) { _, _ ->
+
+            Preference.saveLoginData(application, null)
+            viewModel.loadLoginData()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +122,7 @@ class WanAndroidActivity : AppCompatActivity() {
 
     private fun onFabButtonClick(view: View) {
         navController.currentDestination?.id?.let {
-            val currentFragment = fragmentManager.fragments[0] as? ChildFragmentInterface
+            val currentFragment = fragmentManager.fragments[0] as? OnScrollToTop
             currentFragment?.scrollToTop(view)
         }
     }
@@ -123,10 +132,6 @@ class WanAndroidActivity : AppCompatActivity() {
         if (requestCode == REQUEST_LOGIN) {
             viewModel.loadLoginData()
         }
-    }
-
-    interface ChildFragmentInterface {
-        fun scrollToTop(view: View)
     }
 
     companion object {

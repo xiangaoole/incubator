@@ -9,13 +9,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectBinding
-import com.xiangaoole.android.wanandroid.model.WechatTree
-import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
+import com.xiangaoole.android.wanandroid.model.WechatBranch
+import com.xiangaoole.android.wanandroid.ui.common.BaseTreeAdapter
+import com.xiangaoole.android.wanandroid.ui.common.OnScrollToTop
+import com.xiangaoole.android.wanandroid.ui.common.LeafListFragmentGetter
 import com.xiangaoole.android.wanandroid.util.bindView
 import com.xiangaoole.android.wanandroid.util.fromHtml
 
 class WechatFragment : Fragment(R.layout.fragment_project),
-    WanAndroidActivity.ChildFragmentInterface {
+    OnScrollToTop {
     private val binding by bindView(FragmentProjectBinding::bind)
     private val viewModel: WechatTreeViewModel by viewModels {
         val repository = Injection.provideWanAndroidRepository(requireContext())
@@ -33,9 +35,15 @@ class WechatFragment : Fragment(R.layout.fragment_project),
         }
     }
 
-    private fun initPagerView(dataTree: List<WechatTree>) {
+    private fun initPagerView(dataTree: List<WechatBranch>) {
         binding.pager.adapter =
-            WechatTreeAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, dataTree)
+            BaseTreeAdapter(
+                childFragmentManager,
+                viewLifecycleOwner.lifecycle,
+                dataTree
+            ) {
+                WechatListFragment.newInstance(it.id)
+            }
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = dataTree[position].name.fromHtml()
         }.attach()
@@ -43,7 +51,7 @@ class WechatFragment : Fragment(R.layout.fragment_project),
 
     override fun scrollToTop(view: View) {
         val pager = binding.pager
-        val adapter = pager.adapter as? WechatTreeAdapter
+        val adapter = pager.adapter as? LeafListFragmentGetter
         adapter?.getFragment(pager.currentItem)?.scrollToTop(view)
     }
 }

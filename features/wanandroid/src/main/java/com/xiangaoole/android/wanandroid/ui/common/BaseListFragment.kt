@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentCommonListBinding
-import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.bindView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
  * Base Fragment show a RecycleView
  */
 abstract class BaseListFragment<T : Any>
-    : Fragment(R.layout.fragment_common_list), WanAndroidActivity.ChildFragmentInterface {
+    : Fragment(R.layout.fragment_common_list), OnScrollToTop {
 
     protected val binding by bindView(FragmentCommonListBinding::bind)
 
@@ -64,8 +63,8 @@ abstract class BaseListFragment<T : Any>
         adapter.addLoadStateListener(loadStateListener)
 
         return adapter.withLoadStateHeaderAndFooter(
-            ProjectLoadStateAdapter { adapter.retry() },
-            ProjectLoadStateAdapter { adapter.retry() }
+            LeafLoadStateAdapter { adapter.retry() },
+            LeafLoadStateAdapter { adapter.retry() }
         )
     }
 

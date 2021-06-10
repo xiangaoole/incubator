@@ -10,6 +10,16 @@ data class HttpResult<T>(
     @Json(name = "errorMsg") val errorMsg: String
 )
 
+data class BaseListData<T>(
+    @Json(name = "currentPage") val currentPage: Int = 1,
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "over") val over: Boolean = false,
+    @Json(name = "size") val size: Int = 0,
+    @Json(name = "pageCount") val pageCount: Int = 0,
+    @Json(name = "total") val total: Int = 0,
+    @Json(name = "datas") val datas: List<T>
+)
+
 // Tag
 data class Tag(
     @Json(name = "name") val name: String,
@@ -29,14 +39,6 @@ data class Banner(
 )
 
 // 首页文章列表
-data class HomeArticleList(
-    @Json(name = "currentPage") val currentPage: Int = 1,
-    @Json(name = "over") val over: Boolean = false,
-    @Json(name = "size") val size: Int = 0,
-    @Json(name = "total") val total: Int = 0,
-    @Json(name = "datas") val datas: List<HomeArticle> = emptyList()
-)
-
 data class HomeArticle(
     @Json(name = "author") val author: String = "",
     @Json(name = "chapterId") val chapterId: Long = 0,
@@ -64,14 +66,6 @@ data class ProjectTree(
     @Json(name = "parentChapterId") val parentChapterId: Int = -1,
 )
 
-data class ProjectList(
-    @Json(name = "currentPage") val currentPage: Int = 1,
-    @Json(name = "over") val over: Boolean = false,
-    @Json(name = "size") val size: Int = 0,
-    @Json(name = "total") val total: Int = 0,
-    @Json(name = "datas") val datas: List<Project> = emptyList()
-)
-
 @Entity(tableName = "projects")
 data class Project(
     @Json(name = "id") @PrimaryKey val id: Long,
@@ -86,20 +80,12 @@ data class Project(
 )
 
 // 微信公众号
-data class WechatTree(
+data class WechatBranch(
     @Json(name = "courseId") val courseId: Int = -1,
     @Json(name = "id") val id: Int = -1,
     @Json(name = "name") val name: String = "",
     @Json(name = "order") val order: Int = -1,
     @Json(name = "parentChapterId") val parentChapterId: Int = -1,
-)
-
-data class WechatList(
-    @Json(name = "currentPage") val currentPage: Int = 1,
-    @Json(name = "over") val over: Boolean = false,
-    @Json(name = "size") val size: Int = 0,
-    @Json(name = "total") val total: Int = 0,
-    @Json(name = "datas") val datas: List<Wechat> = emptyList()
 )
 
 data class Wechat(
@@ -112,6 +98,20 @@ data class Wechat(
     @Json(name = "publishTime") val publishTime: Long, // Date millis
     @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
     @Json(name = "link") val link: String, // https://www.wanandroid.com/blog/show/{link}
+)
+
+// 收藏文章
+data class CollectionArticle(
+    @Json(name = "author") val author: String,
+    @Json(name = "chapterId") val chapterId: Long,
+    @Json(name = "chapterName") val chapterName: String,
+    @Json(name = "desc") val desc: String,
+    @Json(name = "envelopePic") val envelopePic: String,
+    @Json(name = "id") val id: Long,
+    @Json(name = "link") val link: String,
+    @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
+    @Json(name = "publishTime") val publishTime: Long, // Date millis
+    @Json(name = "title") val title: String,
 )
 
 // 登录信息

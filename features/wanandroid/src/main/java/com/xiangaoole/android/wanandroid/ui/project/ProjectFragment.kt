@@ -10,7 +10,9 @@ import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.FragmentProjectBinding
 import com.xiangaoole.android.wanandroid.model.ProjectTree
-import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
+import com.xiangaoole.android.wanandroid.ui.common.BaseTreeAdapter
+import com.xiangaoole.android.wanandroid.ui.common.OnScrollToTop
+import com.xiangaoole.android.wanandroid.ui.common.LeafListFragmentGetter
 import com.xiangaoole.android.wanandroid.util.bindView
 import com.xiangaoole.android.wanandroid.util.fromHtml
 
@@ -18,7 +20,7 @@ import com.xiangaoole.android.wanandroid.util.fromHtml
  * [Fragment] for showing projects of different chapter using [ViewPager2].
  */
 open class ProjectFragment : Fragment(R.layout.fragment_project),
-    WanAndroidActivity.ChildFragmentInterface {
+    OnScrollToTop {
     private val binding by bindView(FragmentProjectBinding::bind)
     private val viewModel: ProjectTreeViewModel by viewModels {
         Injection.providerProjectTreeViewModelFactory(requireContext())
@@ -37,7 +39,9 @@ open class ProjectFragment : Fragment(R.layout.fragment_project),
 
     private fun initPagerView(projectTrees: List<ProjectTree>) {
         binding.pager.adapter =
-            ProjectTreeAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, projectTrees)
+            BaseTreeAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, projectTrees) {
+                ProjectListFragment.newInstance(it.id)
+            }
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = projectTrees[position].name.fromHtml()
         }.attach()
@@ -45,7 +49,7 @@ open class ProjectFragment : Fragment(R.layout.fragment_project),
 
     override fun scrollToTop(view: View) {
         val pager = binding.pager
-        val adapter = pager.adapter as? ProjectTreeAdapter
+        val adapter = pager.adapter as? LeafListFragmentGetter
         adapter?.getFragment(pager.currentItem)?.scrollToTop(view)
     }
 }

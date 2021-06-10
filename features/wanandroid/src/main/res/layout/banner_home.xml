@@ -13,7 +13,6 @@
         app:banner_indicator_marginRight="@dimen/dp_5"
         app:banner_indicator_normal_color="@color/white"
         app:banner_indicator_selected_color="@color/colorPrimary"
-        app:banner_radius="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
