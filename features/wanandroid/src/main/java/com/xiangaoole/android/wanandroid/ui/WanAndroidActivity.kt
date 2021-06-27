@@ -116,6 +116,7 @@ class WanAndroidActivity : AppCompatActivity() {
         viewModel.error.observe(this) {
             if (it != null) {
                 CustomToast(this, it)
+                viewModel.errorDone()
             }
         }
     }

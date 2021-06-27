@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.xiangaoole.android.incubator.App
 import com.xiangaoole.android.wanandroid.constant.Constant
+import com.xiangaoole.android.wanandroid.constant.HttpHelper
 import com.xiangaoole.android.wanandroid.model.LoginData
 
 class Preference {
@@ -51,6 +52,7 @@ class Preference {
                     putString(Constant.USERNAME_KEY, "")
                     putString(Constant.PASSWORD_KEY, "")
                     putString(Constant.TOKEN_KEY, "")
+                    putString(HttpHelper.SAVE_COOKIE_HOST, "") // clear cookie
                 } else {
                     putBoolean(Constant.LOGIN_KEY, true)
                     putString(Constant.USERNAME_KEY, data.username)

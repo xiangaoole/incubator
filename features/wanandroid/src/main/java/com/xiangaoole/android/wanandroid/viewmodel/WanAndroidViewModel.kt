@@ -5,10 +5,11 @@ import androidx.lifecycle.*
 import com.xiangaoole.android.wanandroid.constant.Constant
 import com.xiangaoole.android.wanandroid.data.WanAndroidRepository
 import com.xiangaoole.android.wanandroid.ext.getPref
+import com.xiangaoole.android.wanandroid.http.exception.ErrorCode
 import com.xiangaoole.android.wanandroid.http.exception.ExceptionHandler
+import com.xiangaoole.android.wanandroid.model.UserInfoBody
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Exception
 
 class WanAndroidViewModel(
     private val repository: WanAndroidRepository,
@@ -19,6 +20,9 @@ class WanAndroidViewModel(
 
     val username: LiveData<String> get() = _username
     private val _username = MutableLiveData<String>("")
+
+    val userDataInfo: LiveData<UserInfoBody?> get() = _userDataInfo
+    private val _userDataInfo = MutableLiveData<UserInfoBody?>()
 
     /**
      * 异常信息，可能是网络连接问题等
@@ -38,9 +42,27 @@ class WanAndroidViewModel(
             val isLogin = getPref(Constant.LOGIN_KEY, false)
             val username = getPref(Constant.USERNAME_KEY, "")
             val token = getPref(Constant.TOKEN_KEY, "")
+            if (isLogin) {
+
+            }
             _isLogin.value = isLogin
             _username.value = username
             Timber.d("isLogin: $isLogin, username: $username")
+        }
+    }
+
+    private fun updateUserDataInfo(isLogin: Boolean) {
+        viewModelScope.launch {
+            try {
+                val result = repository.getUserInfo()
+                if (result.errorCode != ErrorCode.SUCCESS) {
+                    _error.value = result.errorMsg
+                } else {
+                    _userDataInfo.value = result.data
+                }
+            } catch (e: Exception) {
+                _error.value = ExceptionHandler.handle(e)
+            }
         }
     }
 
@@ -59,6 +81,10 @@ class WanAndroidViewModel(
 
     fun logoutSuccessDone() {
         _logoutSuccess.value = null
+    }
+
+    fun errorDone() {
+        _error.value = null
     }
 
     class Factory(

@@ -22,7 +22,7 @@ object HttpHelper {
      */
     const val MAX_CACHE_SIZE: Long = 1024 * 1024 * 10
 
-    fun encodeCookie(cookies: List<String>): String {
+    private fun encodeCookie(cookies: List<String>): String {
         val sb = StringBuilder()
         val set = HashSet<String>()
         cookies.flatMap { cookie -> cookie.split(";".toRegex()).dropLastWhile { it.isEmpty() } }

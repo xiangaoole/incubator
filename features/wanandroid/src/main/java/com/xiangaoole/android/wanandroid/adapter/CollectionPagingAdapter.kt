@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.xiangaoole.android.wanandroid.R
 import com.xiangaoole.android.wanandroid.databinding.ListItemHomeBinding
 import com.xiangaoole.android.wanandroid.model.CollectionArticle
 import com.xiangaoole.android.wanandroid.ui.ArticleActivity
@@ -38,22 +39,26 @@ class CollectionViewHolder private constructor(
         article?.run {
             binding.tvTopTip.isVisible = top
             binding.tvNewTip.isVisible = fresh
-            binding.tvArticleTag.isVisible = !tags.isNullOrEmpty()
-            if (!tags.isNullOrEmpty()) {
+            binding.tvArticleTag.isVisible = tags.isNotEmpty()
+            if (tags.isNotEmpty()) {
                 binding.tvArticleTag.text = tags[0].name
             }
-            binding.titleText.htmlText(article.title)
+            binding.titleText.htmlText(title)
             binding.shareDateText.text = niceDate
-            binding.authorText.text = if (author.isNotEmpty()) author else shareUser
+            binding.authorText.text = when {
+                author.isNotEmpty() -> author
+                shareUser.isNotEmpty() -> shareUser
+                else -> binding.root.resources.getString(R.string.default_author)
+            }
             binding.chapterName.text = when {
-                !chapterName.isNullOrEmpty() && !superChapterName.isNullOrEmpty() ->
+                chapterName.isNotEmpty() && superChapterName.isNotEmpty() ->
                     "$superChapterName / $chapterName"
-                !chapterName.isNullOrEmpty() -> chapterName
-                !superChapterName.isNullOrEmpty() -> superChapterName
+                chapterName.isNotEmpty() -> chapterName
+                superChapterName.isNotEmpty() -> superChapterName
                 else -> ""
             }
-            binding.ivThumbnail.isVisible = !envelopePic.isNullOrEmpty()
-            if (!envelopePic.isNullOrEmpty()) {
+            binding.ivThumbnail.isVisible = envelopePic.isNotEmpty()
+            if (envelopePic.isNotEmpty()) {
                 binding.ivThumbnail.bindUrl(envelopePic)
             }
         }

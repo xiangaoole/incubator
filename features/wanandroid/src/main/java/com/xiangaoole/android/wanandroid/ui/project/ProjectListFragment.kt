@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xiangaoole.android.wanandroid.Injection
 import com.xiangaoole.android.wanandroid.model.Project
 import com.xiangaoole.android.wanandroid.ui.common.BaseListFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 /**
  * Fragment show project articles list.
  */
+@AndroidEntryPoint
 class ProjectListFragment : BaseListFragment<Project>() {
+
+    @Inject lateinit var viewModelFactory: ProjectListViewModel.ProjectListViewModelFactory
 
     private val viewModel: ProjectListViewModel by viewModels {
         val cid: Int = arguments?.getInt(ARG_KEY_CID) ?: -1

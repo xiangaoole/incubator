@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application android:networkSecurityConfig="@xml/network_security_config">
-        <activity android:name=".ui.CollectionActivity"></activity>
+        <activity android:name=".ui.CollectionActivity" />
         <activity android:name=".ui.ArticleActivity" />
         <activity
             android:name=".ui.LoginActivity"

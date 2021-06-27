@@ -13,6 +13,8 @@ object Versions {
 
     const val retrofit = "2.9.0"
 
+    const val moshi = "1.12.0"
+
     /**
      * https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
      */
@@ -68,4 +70,16 @@ object Versions {
      * - classpath "androidx.benchmark:benchmark-gradle-plugin:"
      */
     const val benchmark = "1.0.0"
+
+    /**
+     * https://dagger.dev/hilt/gradle-setup
+     *
+     * - root gradle: classpath "com.google.dagger:hilt-android-gradle-plugin:"
+     * - apply plugin: 'dagger.hilt.android.plugin'
+     * - implementation "com.google.dagger:hilt-android:$hilt_version"
+     * - kapt "com.google.dagger:hilt-compiler:$hilt_version"
+     */
+    const val hilt = "2.37"
+
+    const val kotlin = "1.5.0"
 }

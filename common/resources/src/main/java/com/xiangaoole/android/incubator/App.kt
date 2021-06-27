@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.view.Choreographer
 import com.xiangaoole.android.module_base.BuildConfig
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
+@HiltAndroidApp
 class App : Application() {
 
     companion object {

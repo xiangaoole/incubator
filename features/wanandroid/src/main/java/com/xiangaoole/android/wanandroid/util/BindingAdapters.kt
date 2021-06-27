@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.xiangaoole.android.wanandroid.R
 
-val options = RequestOptions()
+private val options = RequestOptions()
     .diskCacheStrategy(DiskCacheStrategy.DATA)
     .placeholder(R.drawable.loading_animation)
     .error(R.drawable.ic_broken_image_24)

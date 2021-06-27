@@ -1,5 +1,10 @@
 package com.xiangaoole.android.wanandroid.api
 
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.xiangaoole.android.incubator.App
 import com.xiangaoole.android.wanandroid.constant.Constant
 import com.xiangaoole.android.wanandroid.constant.HttpHelper
@@ -12,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.io.File
+import java.lang.reflect.Type
 
 /**
  * WanAndroid communication setup via Retrofit.
@@ -37,6 +43,13 @@ interface WanAndroidService {
      */
     @GET("user/logout/json")
     suspend fun logout(): HttpResult<Any>
+
+    /**
+     * 获取个人积分，需要登录后访问
+     * https://www.wanandroid.com/lg/coin/userinfo/json
+     */
+    @GET
+    suspend fun getUserInfo(): HttpResult<UserInfoBody>
 
     /**
      * 收藏的文章列表
@@ -104,10 +117,13 @@ interface WanAndroidService {
         private const val BASE_URL = "https://www.wanandroid.com"
 
         fun create(): WanAndroidService {
+            val moshi = Moshi.Builder()
+                .addLast(KotlinJsonAdapterFactory()) // for Kotlin default value
+                .build()
             return Retrofit.Builder()
                 .client(getOkHttpClient())
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
                 .create(WanAndroidService::class.java)
         }

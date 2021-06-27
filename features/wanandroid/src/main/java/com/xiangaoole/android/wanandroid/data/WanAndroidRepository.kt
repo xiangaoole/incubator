@@ -100,6 +100,8 @@ class WanAndroidRepository(
         ).flow
     }
 
+    suspend fun getUserInfo() = service.getUserInfo()
+
     suspend fun login(username: String, password: String) =
         service.login(username, password)
 

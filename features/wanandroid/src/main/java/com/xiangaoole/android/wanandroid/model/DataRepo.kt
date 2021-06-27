@@ -101,20 +101,21 @@ data class Wechat(
 )
 
 // 收藏文章
+// 除了文字标题，链接，其他字段都可能为null，一定要注意布局下发 null 时的显示情况。
 data class CollectionArticle(
-    @Json(name = "author") val author: String,
+    @Json(name = "author") val author: String = "",
     @Json(name = "chapterId") val chapterId: Long,
-    @Json(name = "chapterName") val chapterName: String? = "",
-    @Json(name = "desc") val desc: String,
-    @Json(name = "envelopePic") val envelopePic: String?,
+    @Json(name = "chapterName") val chapterName: String = "",
+    @Json(name = "desc") val desc: String = "",
+    @Json(name = "envelopePic") val envelopePic: String = "",
     @Json(name = "fresh") val fresh: Boolean = false,
-    @Json(name = "id") val id: Long,
+    @Json(name = "id") val id: Long = 0,
     @Json(name = "link") val link: String,
-    @Json(name = "niceDate") val niceDate: String?, // Date formatted in Local.CHINA
-    @Json(name = "publishTime") val publishTime: Long, // Date millis
-    @Json(name = "shareUser") val shareUser: String?,
-    @Json(name = "superChapterName") val superChapterName: String? = "",
-    @Json(name = "tags") val tags: List<Tag>?,
+    @Json(name = "niceDate") val niceDate: String = "", // Date formatted in Local.CHINA
+    @Json(name = "publishTime") val publishTime: Long = 0, // Date millis
+    @Json(name = "shareUser") val shareUser: String = "",
+    @Json(name = "superChapterName") val superChapterName: String = "",
+    @Json(name = "tags") val tags: List<Tag> = emptyList(),
     @Json(name = "title") val title: String,
     var top: Boolean = false
 )
@@ -129,4 +130,12 @@ data class LoginData(
     @Json(name = "token") val token: String,
     @Json(name = "type") val type: Int,
     @Json(name = "username") val username: String
+)
+
+// 用户积分信息
+data class UserInfoBody(
+    @Json(name = "coinCount") val coinCount: Int = -1, // 总积分
+    @Json(name = "rank") val rank: Int = -1, // 当前排名
+    @Json(name = "userId") val userId: Int = -1,
+    @Json(name = "username") val username: String = ""
 )
