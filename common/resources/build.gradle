@@ -14,4 +14,12 @@ dependencies {
     api "com.jakewharton.timber:timber:${Versions.timber}"
     api "com.google.dagger:hilt-android:${Versions.hilt}"
     kapt "com.google.dagger:hilt-compiler:${Versions.hilt}"
+
+    api deps.rxjava2
+    api deps.rxandroid2
+
+    // for test
+    testImplementation deps.test.junit.junit_junit
+    androidTestImplementation deps.test.junit.ext_junit
+    androidTestImplementation deps.test.espresso.core
 }
