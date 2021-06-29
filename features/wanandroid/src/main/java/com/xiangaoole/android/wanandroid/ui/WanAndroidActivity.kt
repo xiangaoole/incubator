@@ -2,9 +2,11 @@ package com.xiangaoole.android.wanandroid.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,6 +21,7 @@ import com.xiangaoole.android.wanandroid.databinding.LayoutNavHeaderBinding
 import com.xiangaoole.android.wanandroid.ui.common.OnScrollToTop
 import com.xiangaoole.android.wanandroid.util.DialogUtil
 import com.xiangaoole.android.wanandroid.util.Preference
+import com.xiangaoole.android.wanandroid.util.StatusBarUtil
 import com.xiangaoole.android.wanandroid.viewmodel.WanAndroidViewModel
 import com.xiangaoole.android.wanandroid.widget.CustomToast
 
@@ -80,6 +83,7 @@ class WanAndroidActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWanandroidBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setStatusBar()
 
         // Find NavController
         val navHostFragment =
@@ -104,6 +108,15 @@ class WanAndroidActivity : AppCompatActivity() {
 
         initViewModelObserve()
         initDrawerNavView()
+    }
+
+    private fun setStatusBar() {
+        val typedValue = TypedValue();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        val color = ContextCompat.getColor(this, typedValue.resourceId)
+
+        StatusBarUtil.setStatusBarColor(window, color)
+        StatusBarUtil.setLightStatusBar(window, false)
     }
 
     private fun initViewModelObserve() {
