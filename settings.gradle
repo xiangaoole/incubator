@@ -1,6 +1,10 @@
 rootProject.name = "AndroidDev"
+def rn_root_dir = "../"
 include ':app'
 include ':common:resources'
 include ':features:home'
 include ':features:meditation'
 include ':features:wanandroid'
+
+apply from: file("$rn_root_dir/node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
+applyNativeModulesSettingsGradle(settings)

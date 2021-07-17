@@ -2,9 +2,13 @@ package com.xiangaoole.android.incubator
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.xiangaoole.android.meditation.MeditationActivity
@@ -12,6 +16,7 @@ import com.xiangaoole.android.module_home.HomeActivity
 import com.xiangaoole.android.wanandroid.ui.WanAndroidActivity
 import com.xiangaoole.android.wanandroid.util.StatusBarUtil
 import timber.log.Timber
+import java.net.URI
 import kotlin.reflect.KClass
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -19,6 +24,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         Timber.d("MainActivity onCreate")
         setStatusBar()
+        checkPermission()
     }
 
     fun toHome(view: View) {
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     fun toTestTask(view: View) {
-        jumpTo(LearnTaskActivity::class)
+        jumpTo(HelloRnActivity::class)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -63,5 +69,28 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         StatusBarUtil.setStatusBarColor(window, color)
         StatusBarUtil.setLightStatusBar(window, true)
+    }
+
+    private fun checkPermission() {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:${packageName}")
+            )
+            startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "没有授权悬浮窗(overlay)权限", Toast.LENGTH_SHORT).show()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    companion object {
+        private const val OVERLAY_PERMISSION_REQ_CODE: Int = 1
     }
 }

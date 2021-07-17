@@ -11,21 +11,23 @@ buildscript {
         mavenCentral()
     }
     ext.versions = [
-            "rxjava2"               : "2.2.21",
-            "rxandroid2"            : "2.1.1",
+            "rxjava2"   : "2.2.21",
+            "rxandroid2": "2.1.1",
     ]
     ext.deps = [
-            'rxjava2'                 : "io.reactivex.rxjava2:rxjava:${versions.rxjava2}",
-            'rxandroid2'              : "io.reactivex.rxjava2:rxandroid:${versions.rxandroid2}",
-            'test'                    : [
+            'rxjava2'   : "io.reactivex.rxjava2:rxjava:${versions.rxjava2}",
+            'rxandroid2': "io.reactivex.rxjava2:rxandroid:${versions.rxandroid2}",
+            'test'      : [
                     'junit'   : [
-                            'junit_junit' : "junit:junit:4.12",
-                            'ext_junit'   : "androidx.test.ext:junit:1.1.2"
+                            'junit_junit': "junit:junit:4.12",
+                            'ext_junit'  : "androidx.test.ext:junit:1.1.2"
                     ],
-                    'espresso'  : [
-                          'core'    : "androidx.test.espresso:espresso-core:3.3.0"
+                    'espresso': [
+                            'core': "androidx.test.espresso:espresso-core:3.3.0"
                     ]
             ]
+    ]
+    ext.rn = [
     ]
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.1"
@@ -44,7 +46,16 @@ allprojects {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
         maven { url 'https://jitpack.io' } // for AgentWeb
-        maven { url "https://s01.oss.sonatype.org/content/groups/public" } // for youth5201314/banner
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        // for youth5201314/banner
+        maven {
+            // All of React Native (JS, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
     }
 }
 

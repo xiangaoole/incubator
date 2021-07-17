@@ -50,11 +50,11 @@
         app:layout_constraintTop_toBottomOf="@+id/toMeditation" />
 
     <Button
-        android:id="@+id/testActivityTask"
+        android:id="@+id/testRN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="testActivityTask"
+        android:text="test_rn"
         app:layout_constraintEnd_toEndOf="parent"
         android:onClick="toTestTask"
         app:layout_constraintStart_toStartOf="parent"
